@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEditor;
@@ -11,17 +12,26 @@ public class CityManager : MonoBehaviour
     public float[,] happinessGrid; // Grid to store happiness values
     public float funds = 10000.00f; // Total funds for user
     public TextMeshProUGUI fundsText;
+    public int population = 15;
+    public TextMeshProUGUI populationText;
+    public float delay = 5f;
+    public float discoverChance = 0.5f;
+    public float moveInChance = 0.3f;
+    public TextMeshProUGUI happinessText;
 
     void Start()
     {
         cityGrid = new GameObject[citySize, citySize];
         happinessGrid = new float[citySize, citySize];
         fundsText.text = "Funds: $" + funds.ToString();
+        StartCoroutine(CheckPopulation());
     }
 
     private void Update()
     {
         fundsText.text = "Funds: $" + funds.ToString();
+        populationText.text = "Population: " + population.ToString();
+        happinessText.text = "Happiness: " + CalculateTotalHappiness().ToString();
     }
 
 
@@ -58,7 +68,7 @@ public class CityManager : MonoBehaviour
         // Apply direct impact
         if (isRemoving)
         {
-            happinessImpact = -1.0f;
+            happinessImpact *= -1.0f;
         }
 
         happinessGrid[x, y] += happinessImpact;
@@ -131,5 +141,31 @@ public class CityManager : MonoBehaviour
             }
         }
         return null;
+    }
+    IEnumerator CheckPopulation() {
+        //TODO: add leave city chance
+        //TODO: check to see if they can enter the city
+        //TODO: check available space
+        //TODO: happiness rating effects chance to move in
+        while (true)
+        {
+            yield return new WaitForSeconds(0.5f);
+            //random.value goes from 0.0 -> 1.0
+            if(Random.value < discoverChance)
+            {
+                if(Random.value < moveInChance)
+                {
+                    population++;
+                    Debug.Log("Discovered and moved in");
+                }
+                else
+                {
+                    Debug.Log("Discovered but did not move in");
+                }
+            }
+
+        }
+
+    
     }
 }

@@ -29,6 +29,7 @@ public class BuildingPlacer : MonoBehaviour
                 else
                 {
                     Debug.Log("Cant place on street");
+                    //test
                 }
             }
         }
