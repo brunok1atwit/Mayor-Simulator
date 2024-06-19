@@ -20,4 +20,4 @@ MonoBehaviour:
   educationImpact: -100
   cost: 100
   proximityBonusRange: -10
-  proximityBonusImpact: 3534
+  proximityBonusImpact: 1
