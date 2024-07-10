@@ -4,27 +4,53 @@ using TMPro;
 using UnityEditor;
 using UnityEngine;
 
+
 public class CityManager : MonoBehaviour
 {
     public List<BuildingType> buildingTypes;
     public GameObject[,] cityGrid; // Simple 2D grid for buildings
     public int citySize = 10; // Define the size of your city grid
-    public float[,] happinessGrid; // Grid to store happiness values
-    public float funds = 10000.00f; // Total funds for user
+    public float[,] happinessGrid;
+    public float[,] economicGrid;
+    public float[,] environmentalGrid;
+    public float[,] safetyGrid;
+    public float[,] healthcareGrid;
+    public float[,] educationGrid;
+    public float[,] recreationGrid;
+    public float[,] housingGrid;
+
+    public float funds = 10000.00f;
     public TextMeshProUGUI fundsText;
     public int population = 15;
     public TextMeshProUGUI populationText;
-    public float delay = 5f;
-    public float discoverChance = 0.5f;
-    public float moveInChance = 0.3f;
     public TextMeshProUGUI happinessText;
+    public TextMeshProUGUI economText;
+    public TextMeshProUGUI enviroText;
+    public TextMeshProUGUI safetText;
+    public TextMeshProUGUI healtText;
+    public TextMeshProUGUI recreText;
+    public TextMeshProUGUI houseText;
+    public float discoverChance = 0.95f;
+    public float moveInChance = 0.65f;
+    public float taxRate = 0.05f;
+
+    private Dictionary<Vector2Int, BuildingType> placedBuildings = new Dictionary<Vector2Int, BuildingType>();
 
     void Start()
     {
         cityGrid = new GameObject[citySize, citySize];
         happinessGrid = new float[citySize, citySize];
+        economicGrid = new float[citySize, citySize];
+        environmentalGrid = new float[citySize, citySize];
+        safetyGrid = new float[citySize, citySize];
+        healthcareGrid = new float[citySize, citySize];
+        educationGrid = new float[citySize, citySize];
+        recreationGrid = new float[citySize, citySize];
+        housingGrid = new float[citySize, citySize];
+
         fundsText.text = "Funds: $" + funds.ToString();
         StartCoroutine(CheckPopulation());
+        StartCoroutine(Taxes());
     }
 
     private void Update()
@@ -32,15 +58,19 @@ public class CityManager : MonoBehaviour
         fundsText.text = "Funds: $" + funds.ToString();
         populationText.text = "Population: " + population.ToString();
         happinessText.text = "Happiness: " + CalculateTotalHappiness().ToString();
+        economText.text = "Economic: " + CalculateTotalScore(economicGrid).ToString();
+        enviroText.text = "Environmental: " + CalculateTotalScore(environmentalGrid).ToString();
+        safetText.text = "Safety: " + CalculateTotalScore(safetyGrid).ToString();
+        healtText.text = "Healthcare: " + CalculateTotalScore(healthcareGrid).ToString();
+        recreText.text = "Recreation: " + CalculateTotalScore(recreationGrid).ToString();
+        houseText.text = "Housing: " + CalculateTotalScore(housingGrid).ToString();
     }
-
 
     public void PlaceBuilding(BuildingType buildingType, int x, int y)
     {
         if (x >= 0 && x < citySize && y >= 0 && y < citySize)
         {
-            
-            if (cityGrid[x,y] != null)
+            if (cityGrid[x, y] != null)
             {
                 print("Building Here.");
             }
@@ -48,13 +78,11 @@ public class CityManager : MonoBehaviour
             {
                 GameObject building = Instantiate(buildingType.buildingPrefab, new Vector3(x, 0, y), Quaternion.identity);
                 cityGrid[x, y] = building;
-                // Update city ratings
+                Vector2Int position = new Vector2Int(x, y);
+                placedBuildings[position] = buildingType;
                 UpdateCityRatings(buildingType, x, y, false);
                 funds -= buildingType.cost / 2.0f;
             }
-                
-
-
         }
         else
         {
@@ -64,17 +92,36 @@ public class CityManager : MonoBehaviour
 
     void UpdateCityRatings(BuildingType buildingType, int x, int y, bool isRemoving)
     {
-        float happinessImpact = buildingType.happinessImpact;
-        // Apply direct impact
-        if (isRemoving)
+        float multiplier = isRemoving ? -1.0f : 1.0f;
+        
+
+        economicGrid[x, y] += buildingType.economicImpact * multiplier;
+        environmentalGrid[x, y] += buildingType.environmentalImpact * multiplier;
+        safetyGrid[x, y] += buildingType.safetyImpact * multiplier;
+        healthcareGrid[x, y] += buildingType.healthcareImpact * multiplier;
+        educationGrid[x, y] += buildingType.educationImpact * multiplier;
+        recreationGrid[x, y] += buildingType.recreationImpact * multiplier;
+        housingGrid[x, y] += buildingType.housingImpact * multiplier;
+        ApplyDiminishingReturns(x, y, buildingType, isRemoving);
+
+        if (isRemoving && cityGrid[x, y] == null)
         {
-            happinessImpact *= -1.0f;
+            economicGrid[x, y] = 0;
+            environmentalGrid[x, y] = 0;
+            safetyGrid[x, y] = 0;
+            healthcareGrid[x, y] = 0;
+            educationGrid[x, y] = 0;
+            recreationGrid[x, y] = 0;
+            housingGrid[x, y] = 0;
         }
 
-        happinessGrid[x, y] += happinessImpact;
+        happinessGrid[x, y] = CalculateHappiness(x, y);
+    }
 
-        // Apply proximity effect
-        float proximityImpact = isRemoving ? -1 * buildingType.proximityBonusImpact : buildingType.proximityBonusImpact;
+    void ApplyDiminishingReturns(int x, int y, BuildingType buildingType, bool isRemoving)
+    {
+        float diminishingFactor = isRemoving ? 1.0f / 0.9f : 0.9f; // 0.9 for adding, 1/0.9 for removing
+
         for (int i = -1; i <= 1; i++)
         {
             for (int j = -1; j <= 1; j++)
@@ -82,14 +129,57 @@ public class CityManager : MonoBehaviour
                 int newX = x + i;
                 int newY = y + j;
 
-                if (newX >= 0 && newX < citySize && newY >= 0 && newY < citySize)
+                if (newX >= 0 && newX < citySize && newY >= 0 && newY < citySize && cityGrid[newX, newY] != null)
                 {
-                    happinessGrid[newX, newY] += proximityImpact;
+                    BuildingType nearbyBuildingType = GetBuildingTypeFromPrefab(cityGrid[newX, newY]);
+                    if (nearbyBuildingType != null && nearbyBuildingType.category == buildingType.category)
+                    {
+                        economicGrid[newX, newY] *= diminishingFactor;
+                        environmentalGrid[newX, newY] *= diminishingFactor;
+                        safetyGrid[newX, newY] *= diminishingFactor;
+                        healthcareGrid[newX, newY] *= diminishingFactor;
+                        educationGrid[newX, newY] *= diminishingFactor;
+                        recreationGrid[newX, newY] *= diminishingFactor;
+                        housingGrid[newX, newY] *= diminishingFactor;
+                    }
+
+                    // Ensure grid values are reset to zero if no buildings are present
+                    if (isRemoving && cityGrid[newX, newY] == null)
+                    {
+                        economicGrid[newX, newY] = 0;
+                        environmentalGrid[newX, newY] = 0;
+                        safetyGrid[newX, newY] = 0;
+                        healthcareGrid[newX, newY] = 0;
+                        educationGrid[newX, newY] = 0;
+                        recreationGrid[newX, newY] = 0;
+                        housingGrid[newX, newY] = 0;
+                    }
                 }
             }
         }
+    }
 
-        
+    float CalculateHappiness(int x, int y)
+    {
+        float happiness = 0f;
+
+        float economicWeight = 0.15f;
+        float environmentalWeight = 0.15f;
+        float safetyWeight = 0.15f;
+        float healthcareWeight = 0.1f;
+        float educationWeight = 0.1f;
+        float recreationWeight = 0.15f;
+        float housingWeight = 0.2f;
+
+        happiness += economicGrid[x, y] * economicWeight;
+        happiness += environmentalGrid[x, y] * environmentalWeight;
+        happiness += safetyGrid[x, y] * safetyWeight;
+        happiness += healthcareGrid[x, y] * healthcareWeight;
+        happiness += educationGrid[x, y] * educationWeight;
+        happiness += recreationGrid[x, y] * recreationWeight;
+        happiness += housingGrid[x, y] * housingWeight;
+
+        return happiness;
     }
 
     public float CalculateTotalHappiness()
@@ -99,25 +189,35 @@ public class CityManager : MonoBehaviour
         {
             totalHappiness += value;
         }
-        return totalHappiness;
+        return totalHappiness / (citySize * citySize);
+    }
+
+    public float CalculateTotalScore(float[,] grid)
+    {
+        float totalScore = 0f;
+        foreach (float value in grid)
+        {
+            totalScore += value;
+        }
+        return totalScore / (citySize * citySize);
     }
 
     public void RemoveBuilding(int x, int y)
     {
         if (x >= 0 && x < citySize && y >= 0 && y < citySize)
         {
-            // Check if there's a building to remove
-            if (cityGrid[x, y] != null) 
+            if (cityGrid[x, y] != null)
             {
                 GameObject building = cityGrid[x, y];
-                BuildingType buildingType = GetBuildingTypeFromPrefab(building);
-
-                Destroy(building);
-                cityGrid[x, y] = null;
-
-                // Update city ratings by reversing the impact
-                funds += buildingType.cost / 2.0f;
-                UpdateCityRatings(buildingType, x, y, true);
+                Vector2Int position = new Vector2Int(x, y);
+                if (placedBuildings.TryGetValue(position, out BuildingType buildingType))
+                {
+                    Destroy(building);
+                    cityGrid[x, y] = null;
+                    funds += buildingType.cost / 2.0f;
+                    UpdateCityRatings(buildingType, x, y, true);
+                    placedBuildings.Remove(position);
+                }
             }
             else
             {
@@ -142,18 +242,15 @@ public class CityManager : MonoBehaviour
         }
         return null;
     }
-    IEnumerator CheckPopulation() {
-        //TODO: add leave city chance
-        //TODO: check to see if they can enter the city
-        //TODO: check available space
-        //TODO: happiness rating effects chance to move in
+
+    IEnumerator CheckPopulation()
+    {
         while (true)
         {
             yield return new WaitForSeconds(0.5f);
-            //random.value goes from 0.0 -> 1.0
-            if(Random.value < discoverChance)
+            if (Random.value < discoverChance)
             {
-                if(Random.value < moveInChance)
+                if (Random.value < moveInChance)
                 {
                     population++;
                     Debug.Log("Discovered and moved in");
@@ -163,9 +260,15 @@ public class CityManager : MonoBehaviour
                     Debug.Log("Discovered but did not move in");
                 }
             }
-
         }
+    }
 
-    
+    IEnumerator Taxes()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(60f);
+            funds += population * taxRate * 100.0f;
+        }
     }
 }

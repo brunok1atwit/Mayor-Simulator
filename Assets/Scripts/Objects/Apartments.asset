@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de273f744326cf3439f179882af13737, type: 3}
   m_Name: Apartments
   m_EditorClassIdentifier: 
-  category: 2
+  category: 6
   buildingName: Apartments
   buildingPrefab: {fileID: 1053119084242062312, guid: 85c3928f5c70e49489adee380511d0ea,
     type: 3}

@@ -5,43 +5,60 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    public GameObject uiPanel;
-    public Button button1;
-    public Button button2;
-    public Button button3;
-    // Start is called before the first frame update
-    void Start()
-    {
-        // Ensure the UI Panel is initially hidden
-        uiPanel.SetActive(false);
+    public GameObject sidePanel;
+    public GameObject buildingPanel;
+    public Button housingButton;
+    public Text happinessText;
+    public Slider happinessSlider;
+    public Text populationText;
+    public Text fundsText;
 
-        // Assign functions to the buttons
-        button1.onClick.AddListener(Button1Action);
-        button2.onClick.AddListener(Button2Action);
-        button3.onClick.AddListener(Button3Action);
+    private void Start()
+    {
+        // Ensure the building panel is initially hidden
+        buildingPanel.SetActive(false);
+
+        // Assign functions to the category buttons
+        housingButton.onClick.AddListener(ShowHousingBuildings);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !RectTransformUtility.RectangleContainsScreenPoint(uiPanel.GetComponent<RectTransform>(), Input.mousePosition, Camera.main))
+        // Hide the building panel if clicking outside
+        if (Input.GetMouseButtonDown(0) && !RectTransformUtility.RectangleContainsScreenPoint(buildingPanel.GetComponent<RectTransform>(), Input.mousePosition, Camera.main))
         {
-            uiPanel.SetActive(false);
+            buildingPanel.SetActive(false);
         }
     }
 
-    void Button1Action()
+    private void ShowHousingBuildings()
     {
-        Debug.Log("Button 1 Clicked");
+        // Show the building panel and populate it with housing buildings
+        buildingPanel.SetActive(true);
+
+        // Clear existing buttons
+        foreach (Transform child in buildingPanel.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // Add new buttons for housing buildings
+        // CreateButtonForBuilding(BuildingType buildingType);
     }
 
-    void Button2Action()
+    public void UpdateHappiness(float happiness)
     {
-        Debug.Log("Button 2 Clicked");
+        happinessText.text = $"Happiness: {happiness}";
+        happinessSlider.value = happiness;
     }
 
-    void Button3Action()
+    public void UpdatePopulation(int population)
     {
-        Debug.Log("Button 3 Clicked");
+        populationText.text = $"Population: {population}";
+    }
+
+    public void UpdateFunds(float funds)
+    {
+        fundsText.text = $"Funds: {funds}";
     }
 }
