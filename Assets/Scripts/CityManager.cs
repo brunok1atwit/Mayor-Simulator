@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
-
+using static DatabaseManager;
 
 public class CityManager : MonoBehaviour
 {
+    private DatabaseManager _databaseManager;
+    public int currentCityId;
+
     public List<BuildingType> buildingTypes;
     public GameObject[,] cityGrid; // Simple 2D grid for buildings
     public int citySize = 10; // Define the size of your city grid
@@ -38,6 +41,7 @@ public class CityManager : MonoBehaviour
 
     void Start()
     {
+        _databaseManager = FindObjectOfType<DatabaseManager>();
         cityGrid = new GameObject[citySize, citySize];
         happinessGrid = new float[citySize, citySize];
         economicGrid = new float[citySize, citySize];
@@ -51,6 +55,8 @@ public class CityManager : MonoBehaviour
         fundsText.text = "Funds: $" + funds.ToString();
         StartCoroutine(CheckPopulation());
         StartCoroutine(Taxes());
+
+        LoadCity(currentCityId);
     }
 
     private void Update()
@@ -64,6 +70,66 @@ public class CityManager : MonoBehaviour
         healtText.text = "Healthcare: " + CalculateTotalScore(healthcareGrid).ToString();
         recreText.text = "Recreation: " + CalculateTotalScore(recreationGrid).ToString();
         houseText.text = "Housing: " + CalculateTotalScore(housingGrid).ToString();
+    }
+
+    void LoadCity(int cityId)
+    {
+        City city = _databaseManager.GetCity(cityId);
+        if (city != null)
+        {
+            // Load city data
+            population = city.Population;
+            funds = city.Funds;
+
+            // Load buildings
+            List<Building> buildings = _databaseManager.GetBuildings(cityId);
+            foreach (var building in buildings)
+            {
+                // Instantiate buildings based on stored data
+                BuildingType buildingType = GetBuildingType(building.Type);
+                PlaceBuilding(buildingType, building.X, building.Y);
+            }
+        }
+    }
+
+    public void SaveCity()
+    {
+        City city = new City
+        {
+            Id = currentCityId,
+            Name = "Your City Name",
+            Population = population,
+            Funds = funds
+        };
+        _databaseManager.SaveCity(city);
+
+        // Save buildings
+        foreach (var kvp in placedBuildings)
+        {
+            Vector2Int position = kvp.Key;
+            BuildingType buildingType = kvp.Value;
+
+            Building building = new Building
+            {
+                CityId = city.Id,
+                Type = buildingType.buildingName,
+                X = position.x,
+                Y = position.y
+            };
+            _databaseManager.SaveBuilding(building);
+        }
+    }
+
+    private BuildingType GetBuildingType(string buildingName)
+    {
+        foreach (var buildingType in buildingTypes)
+        {
+            if (buildingType.buildingName == buildingName)
+            {
+                return buildingType;
+            }
+        }
+        return null;
     }
 
     public void PlaceBuilding(BuildingType buildingType, int x, int y)
@@ -93,7 +159,6 @@ public class CityManager : MonoBehaviour
     void UpdateCityRatings(BuildingType buildingType, int x, int y, bool isRemoving)
     {
         float multiplier = isRemoving ? -1.0f : 1.0f;
-        
 
         economicGrid[x, y] += buildingType.economicImpact * multiplier;
         environmentalGrid[x, y] += buildingType.environmentalImpact * multiplier;

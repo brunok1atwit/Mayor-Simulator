@@ -2066,6 +2066,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf408afa909d49447b3c859b4aed8439, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentCityId: 0
   buildingTypes:
   - {fileID: 11400000, guid: 7e15deab996036c45ae1becd57d478a1, type: 2}
   - {fileID: 11400000, guid: 0a346f486a30e7545850666d070d22cd, type: 2}
