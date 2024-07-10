@@ -17,7 +17,13 @@ MonoBehaviour:
   buildingPrefab: {fileID: 1053119084242062312, guid: b3f5299fff68582419fc349d551c4ab5,
     type: 3}
   happinessImpact: 100
-  educationImpact: 100
+  educationImpact: 800
   cost: 200
   proximityBonusRange: 100
   proximityBonusImpact: 100
+  economicImpact: 300
+  environmentalImpact: 50
+  safetyImpact: 200
+  healthcareImpact: 100
+  recreationImpact: 200
+  housingImpact: 200

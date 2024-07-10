@@ -16,8 +16,14 @@ MonoBehaviour:
   buildingName: Park
   buildingPrefab: {fileID: 1053119084242062312, guid: 8068e9b46404c0d4484e799bef848a34,
     type: 3}
-  happinessImpact: 100
-  educationImpact: -100
-  cost: 100
-  proximityBonusRange: -10
-  proximityBonusImpact: 1
+  happinessImpact: 0
+  educationImpact: 50
+  cost: 0
+  proximityBonusRange: 0
+  proximityBonusImpact: 0
+  economicImpact: 100
+  environmentalImpact: 500
+  safetyImpact: 100
+  healthcareImpact: 200
+  recreationImpact: 500
+  housingImpact: 100
