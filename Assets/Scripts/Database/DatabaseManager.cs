@@ -1,7 +1,7 @@
+using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting.Dependencies.Sqlite;
-using UnityEngine;
 
 public class DatabaseManager : MonoBehaviour
 {
@@ -54,7 +54,7 @@ public class DatabaseManager : MonoBehaviour
     {
         return _connection.Table<City>().FirstOrDefault(c => c.Id == cityId);
     }
-     
+
     public List<Building> GetBuildings(int cityId)
     {
         return _connection.Table<Building>().Where(b => b.CityId == cityId).ToList();
