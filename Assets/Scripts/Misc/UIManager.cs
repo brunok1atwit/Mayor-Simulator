@@ -15,16 +15,16 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        // Ensure the building panel is initially hidden
+
         buildingPanel.SetActive(false);
 
-        // Assign functions to the category buttons
+     
         housingButton.onClick.AddListener(ShowHousingBuildings);
     }
 
     private void Update()
     {
-        // Hide the building panel if clicking outside
+     
         if (Input.GetMouseButtonDown(0) && !RectTransformUtility.RectangleContainsScreenPoint(buildingPanel.GetComponent<RectTransform>(), Input.mousePosition, Camera.main))
         {
             buildingPanel.SetActive(false);
@@ -33,17 +33,16 @@ public class UIManager : MonoBehaviour
 
     private void ShowHousingBuildings()
     {
-        // Show the building panel and populate it with housing buildings
+     
         buildingPanel.SetActive(true);
 
-        // Clear existing buttons
+     
         foreach (Transform child in buildingPanel.transform)
         {
             Destroy(child.gameObject);
         }
 
-        // Add new buttons for housing buildings
-        // CreateButtonForBuilding(BuildingType buildingType);
+ 
     }
 
     public void UpdateHappiness(float happiness)

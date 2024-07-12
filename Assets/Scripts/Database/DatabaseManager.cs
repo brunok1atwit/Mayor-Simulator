@@ -9,7 +9,7 @@ public class DatabaseManager : MonoBehaviour
 
     void Awake()
     {
-        // Path to the database
+      
         string dbPath = $"{Application.persistentDataPath}/MayorSimulator.db";
         _connection = new SQLiteConnection(dbPath, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
         CreateTables();

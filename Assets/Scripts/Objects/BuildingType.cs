@@ -22,11 +22,11 @@ public class BuildingType : ScriptableObject
     public float educationImpact;
     public float cost;
 
-    // impacts
+ 
     public float proximityBonusRange;
     public float proximityBonusImpact;
 
-    // New impact factors
+   
     public float economicImpact;
     public float environmentalImpact;
     public float safetyImpact;

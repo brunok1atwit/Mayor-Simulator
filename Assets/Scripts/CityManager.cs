@@ -4,15 +4,14 @@ using TMPro;
 using UnityEditor;
 using UnityEngine;
 using static DatabaseManager;
-
 public class CityManager : MonoBehaviour
 {
     private DatabaseManager _databaseManager;
     public int currentCityId;
 
     public List<BuildingType> buildingTypes;
-    public GameObject[,] cityGrid; // Simple 2D grid for buildings
-    public int citySize = 10; // Define the size of your city grid
+    public GameObject[,] cityGrid;
+    public int citySize = 10; 
     public float[,] happinessGrid;
     public float[,] economicGrid;
     public float[,] environmentalGrid;
@@ -41,6 +40,7 @@ public class CityManager : MonoBehaviour
 
     void Start()
     {
+        
         _databaseManager = FindObjectOfType<DatabaseManager>();
         cityGrid = new GameObject[citySize, citySize];
         happinessGrid = new float[citySize, citySize];
@@ -55,37 +55,38 @@ public class CityManager : MonoBehaviour
         fundsText.text = "Funds: $" + funds.ToString();
         StartCoroutine(CheckPopulation());
         StartCoroutine(Taxes());
-
+       
         LoadCity(currentCityId);
     }
 
     private void Update()
     {
+        
         fundsText.text = "Funds: $" + funds.ToString();
         populationText.text = "Population: " + population.ToString();
         happinessText.text = "Happiness: " + CalculateTotalHappiness().ToString();
-        economText.text = "Economic: " + CalculateTotalScore(economicGrid).ToString();
-        enviroText.text = "Environmental: " + CalculateTotalScore(environmentalGrid).ToString();
-        safetText.text = "Safety: " + CalculateTotalScore(safetyGrid).ToString();
-        healtText.text = "Healthcare: " + CalculateTotalScore(healthcareGrid).ToString();
-        recreText.text = "Recreation: " + CalculateTotalScore(recreationGrid).ToString();
-        houseText.text = "Housing: " + CalculateTotalScore(housingGrid).ToString();
+        economText.text = "Economic: " + CalculateTotalScore(economicGrid).ToString("f1");
+        enviroText.text = "Environmental: " + CalculateTotalScore(environmentalGrid).ToString("f1");
+        safetText.text = "Safety: " + CalculateTotalScore(safetyGrid).ToString("f1");
+        healtText.text = "Healthcare: " + CalculateTotalScore(healthcareGrid).ToString("f1");
+        recreText.text = "Recreation: " + CalculateTotalScore(recreationGrid).ToString("f1");
+        houseText.text = "Housing: " + CalculateTotalScore(housingGrid).ToString("f1");
     }
 
-    void LoadCity(int cityId)
+    public void LoadCity(int cityId)
     {
         City city = _databaseManager.GetCity(cityId);
         if (city != null)
         {
-            // Load city data
+          
             population = city.Population;
             funds = city.Funds;
 
-            // Load buildings
+     
             List<Building> buildings = _databaseManager.GetBuildings(cityId);
             foreach (var building in buildings)
             {
-                // Instantiate buildings based on stored data
+                
                 BuildingType buildingType = GetBuildingType(building.Type);
                 PlaceBuilding(buildingType, building.X, building.Y);
             }
@@ -103,7 +104,6 @@ public class CityManager : MonoBehaviour
         };
         _databaseManager.SaveCity(city);
 
-        // Save buildings
         foreach (var kvp in placedBuildings)
         {
             Vector2Int position = kvp.Key;
@@ -208,7 +208,7 @@ public class CityManager : MonoBehaviour
                         housingGrid[newX, newY] *= diminishingFactor;
                     }
 
-                    // Ensure grid values are reset to zero if no buildings are present
+                   
                     if (isRemoving && cityGrid[newX, newY] == null)
                     {
                         economicGrid[newX, newY] = 0;
