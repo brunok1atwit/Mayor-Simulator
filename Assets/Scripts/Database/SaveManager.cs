@@ -19,7 +19,7 @@ public class SaveManager : MonoBehaviour
 
     public void LoadGame()
     {
-        cityManager.LoadCity(cityManager.currentCityId); 
+        cityManager.LoadCity(33); 
         Debug.Log("Game Loaded!");
     }
 }

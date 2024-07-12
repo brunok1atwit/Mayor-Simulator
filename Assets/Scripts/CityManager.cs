@@ -4,14 +4,15 @@ using TMPro;
 using UnityEditor;
 using UnityEngine;
 using static DatabaseManager;
+
 public class CityManager : MonoBehaviour
 {
     private DatabaseManager _databaseManager;
-    public int currentCityId;
+    public int currentCityId = 33;
 
     public List<BuildingType> buildingTypes;
     public GameObject[,] cityGrid;
-    public int citySize = 10; 
+    public int citySize = 10;
     public float[,] happinessGrid;
     public float[,] economicGrid;
     public float[,] environmentalGrid;
@@ -40,7 +41,6 @@ public class CityManager : MonoBehaviour
 
     void Start()
     {
-        
         _databaseManager = FindObjectOfType<DatabaseManager>();
         cityGrid = new GameObject[citySize, citySize];
         happinessGrid = new float[citySize, citySize];
@@ -55,13 +55,12 @@ public class CityManager : MonoBehaviour
         fundsText.text = "Funds: $" + funds.ToString();
         StartCoroutine(CheckPopulation());
         StartCoroutine(Taxes());
-       
+
         LoadCity(currentCityId);
     }
 
     private void Update()
     {
-        
         fundsText.text = "Funds: $" + funds.ToString();
         populationText.text = "Population: " + population.ToString();
         happinessText.text = "Happiness: " + CalculateTotalHappiness().ToString();
@@ -76,25 +75,28 @@ public class CityManager : MonoBehaviour
     public void LoadCity(int cityId)
     {
         City city = _databaseManager.GetCity(cityId);
+        Debug.Log(cityId);
         if (city != null)
         {
-          
+            Debug.Log("Load in city manager hit");
             population = city.Population;
             funds = city.Funds;
 
-     
             List<Building> buildings = _databaseManager.GetBuildings(cityId);
             foreach (var building in buildings)
             {
-                
                 BuildingType buildingType = GetBuildingType(building.Type);
-                PlaceBuilding(buildingType, building.X, building.Y);
+                if (buildingType != null)
+                {
+                    PlaceBuildingFromLoad(buildingType, building.X, building.Y);
+                }
             }
         }
     }
 
     public void SaveCity()
     {
+        Debug.Log("Save in city manager hit");
         City city = new City
         {
             Id = currentCityId,
@@ -138,7 +140,7 @@ public class CityManager : MonoBehaviour
         {
             if (cityGrid[x, y] != null)
             {
-                print("Building Here.");
+                Debug.Log("Building Here.");
             }
             else
             {
@@ -148,6 +150,26 @@ public class CityManager : MonoBehaviour
                 placedBuildings[position] = buildingType;
                 UpdateCityRatings(buildingType, x, y, false);
                 funds -= buildingType.cost / 2.0f;
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Position out of bounds");
+        }
+    }
+
+    public void PlaceBuildingFromLoad(BuildingType buildingType, int x, int y)
+    {
+        Debug.Log("Place Building from load");
+        if (x >= 0 && x < citySize && y >= 0 && y < citySize)
+        {
+            if (cityGrid[x, y] == null)
+            {
+                GameObject building = Instantiate(buildingType.buildingPrefab, new Vector3(x, 0, y), Quaternion.identity);
+                cityGrid[x, y] = building;
+                Vector2Int position = new Vector2Int(x, y);
+                placedBuildings[position] = buildingType;
+                UpdateCityRatings(buildingType, x, y, false);
             }
         }
         else
@@ -185,7 +207,7 @@ public class CityManager : MonoBehaviour
 
     void ApplyDiminishingReturns(int x, int y, BuildingType buildingType, bool isRemoving)
     {
-        float diminishingFactor = isRemoving ? 1.0f / 0.9f : 0.9f; // 0.9 for adding, 1/0.9 for removing
+        float diminishingFactor = isRemoving ? 1.0f / 0.9f : 0.9f;
 
         for (int i = -1; i <= 1; i++)
         {
@@ -208,7 +230,6 @@ public class CityManager : MonoBehaviour
                         housingGrid[newX, newY] *= diminishingFactor;
                     }
 
-                   
                     if (isRemoving && cityGrid[newX, newY] == null)
                     {
                         economicGrid[newX, newY] = 0;
@@ -318,11 +339,11 @@ public class CityManager : MonoBehaviour
                 if (Random.value < moveInChance)
                 {
                     population++;
-                    Debug.Log("Discovered and moved in");
+                    //Debug.Log("Discovered and moved in");
                 }
                 else
                 {
-                    Debug.Log("Discovered but did not move in");
+                    //Debug.Log("Discovered but did not move in");
                 }
             }
         }
