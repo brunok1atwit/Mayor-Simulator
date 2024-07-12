@@ -22,6 +22,7 @@ public class CityManager : MonoBehaviour
     public float[,] recreationGrid;
     public float[,] housingGrid;
 
+    public int housingCap;
     public float funds = 10000.00f;
     public TextMeshProUGUI fundsText;
     public int population = 15;
@@ -34,7 +35,7 @@ public class CityManager : MonoBehaviour
     public TextMeshProUGUI recreText;
     public TextMeshProUGUI houseText;
     public float discoverChance = 0.95f;
-    public float moveInChance = 0.65f;
+    public float moveInChance = 2.0f;
     public float taxRate = 0.05f;
 
     private Dictionary<Vector2Int, BuildingType> placedBuildings = new Dictionary<Vector2Int, BuildingType>();
@@ -144,7 +145,13 @@ public class CityManager : MonoBehaviour
             }
             else
             {
+                //every building placed increases population maximum
+                if (buildingType.buildingName == "Apartments")
+                {
+                    housingCap += 50;
+                }
                 GameObject building = Instantiate(buildingType.buildingPrefab, new Vector3(x, 0, y), Quaternion.identity);
+
                 cityGrid[x, y] = building;
                 Vector2Int position = new Vector2Int(x, y);
                 placedBuildings[position] = buildingType;
@@ -166,6 +173,10 @@ public class CityManager : MonoBehaviour
             if (cityGrid[x, y] == null)
             {
                 GameObject building = Instantiate(buildingType.buildingPrefab, new Vector3(x, 0, y), Quaternion.identity);
+                if (building.name == "Apartments(Clone)")
+                {
+                    housingCap += 50;
+                }
                 cityGrid[x, y] = building;
                 Vector2Int position = new Vector2Int(x, y);
                 placedBuildings[position] = buildingType;
@@ -298,6 +309,15 @@ public class CityManager : MonoBehaviour
                 Vector2Int position = new Vector2Int(x, y);
                 if (placedBuildings.TryGetValue(position, out BuildingType buildingType))
                 {
+                    if (buildingType.buildingName == "Apartments")
+                    {
+                        housingCap -= 50;
+                        Debug.Log("Removed Apartment");
+                        if(population > housingCap)
+                        {
+                            population = housingCap;
+                        }
+                    }
                     Destroy(building);
                     cityGrid[x, y] = null;
                     funds += buildingType.cost / 2.0f;
@@ -338,7 +358,11 @@ public class CityManager : MonoBehaviour
             {
                 if (Random.value < moveInChance)
                 {
-                    population++;
+                    if(population < housingCap)
+                    {
+                        population++;
+                    }
+                    
                     //Debug.Log("Discovered and moved in");
                 }
                 else
