@@ -8,7 +8,7 @@ using static DatabaseManager;
 public class CityManager : MonoBehaviour
 {
     private DatabaseManager _databaseManager;
-    public int currentCityId = 33;
+    public int currentCityId;
 
     public List<BuildingType> buildingTypes;
     public GameObject[,] cityGrid;
@@ -43,21 +43,11 @@ public class CityManager : MonoBehaviour
     void Start()
     {
         _databaseManager = FindObjectOfType<DatabaseManager>();
-        cityGrid = new GameObject[citySize, citySize];
-        happinessGrid = new float[citySize, citySize];
-        economicGrid = new float[citySize, citySize];
-        environmentalGrid = new float[citySize, citySize];
-        safetyGrid = new float[citySize, citySize];
-        healthcareGrid = new float[citySize, citySize];
-        educationGrid = new float[citySize, citySize];
-        recreationGrid = new float[citySize, citySize];
-        housingGrid = new float[citySize, citySize];
+        InitializeCityGrids();
 
         fundsText.text = "Funds: $" + funds.ToString();
         StartCoroutine(CheckPopulation());
         StartCoroutine(Taxes());
-
-        LoadCity(currentCityId);
     }
 
     private void Update()
@@ -73,16 +63,53 @@ public class CityManager : MonoBehaviour
         houseText.text = "Housing: " + CalculateTotalScore(housingGrid).ToString("f1");
     }
 
+    private void InitializeCityGrids()
+    {
+        cityGrid = new GameObject[citySize, citySize];
+        happinessGrid = new float[citySize, citySize];
+        economicGrid = new float[citySize, citySize];
+        environmentalGrid = new float[citySize, citySize];
+        safetyGrid = new float[citySize, citySize];
+        healthcareGrid = new float[citySize, citySize];
+        educationGrid = new float[citySize, citySize];
+        recreationGrid = new float[citySize, citySize];
+        housingGrid = new float[citySize, citySize];
+    }
+
+    private void ClearCurrentState()
+    {
+        // Clear the city grid
+        for (int x = 0; x < citySize; x++)
+        {
+            for (int y = 0; y < citySize; y++)
+            {
+                if (cityGrid[x, y] != null)
+                {
+                    Destroy(cityGrid[x, y]);
+                    cityGrid[x, y] = null;
+                }
+            }
+        }
+
+        // Reset grids and other variables
+        InitializeCityGrids();
+        placedBuildings.Clear();
+        funds = 10000.00f;
+        population = 0;
+        housingCap = 0;
+    }
+
     public void LoadCity(int cityId)
     {
+        ClearCurrentState();
+        currentCityId = cityId;
         City city = _databaseManager.GetCity(cityId);
-        Debug.Log(cityId);
         if (city != null)
         {
-            Debug.Log("Load in city manager hit");
             population = city.Population;
             funds = city.Funds;
 
+            // Load buildings
             List<Building> buildings = _databaseManager.GetBuildings(cityId);
             foreach (var building in buildings)
             {
@@ -93,20 +120,26 @@ public class CityManager : MonoBehaviour
                 }
             }
         }
+
+        UpdateUI();
     }
 
-    public void SaveCity()
+    public void SaveCity(int cityId)
     {
-        Debug.Log("Save in city manager hit");
+        currentCityId = cityId;
         City city = new City
         {
-            Id = currentCityId,
-            Name = "Your City Name",
+            Id = cityId,
+            Name = "City " + cityId,
             Population = population,
             Funds = funds
         };
         _databaseManager.SaveCity(city);
 
+        // Clear existing buildings for this city ID before saving new ones
+        _databaseManager.ClearBuildingsForCity(cityId);
+
+        // Save buildings
         foreach (var kvp in placedBuildings)
         {
             Vector2Int position = kvp.Key;
@@ -145,13 +178,11 @@ public class CityManager : MonoBehaviour
             }
             else
             {
-                //every building placed increases population maximum
                 if (buildingType.buildingName == "Apartments")
                 {
                     housingCap += 50;
                 }
                 GameObject building = Instantiate(buildingType.buildingPrefab, new Vector3(x, 0, y), Quaternion.identity);
-
                 cityGrid[x, y] = building;
                 Vector2Int position = new Vector2Int(x, y);
                 placedBuildings[position] = buildingType;
@@ -167,7 +198,6 @@ public class CityManager : MonoBehaviour
 
     public void PlaceBuildingFromLoad(BuildingType buildingType, int x, int y)
     {
-        Debug.Log("Place Building from load");
         if (x >= 0 && x < citySize && y >= 0 && y < citySize)
         {
             if (cityGrid[x, y] == null)
@@ -313,7 +343,7 @@ public class CityManager : MonoBehaviour
                     {
                         housingCap -= 50;
                         Debug.Log("Removed Apartment");
-                        if(population > housingCap)
+                        if (population > housingCap)
                         {
                             population = housingCap;
                         }
@@ -358,16 +388,10 @@ public class CityManager : MonoBehaviour
             {
                 if (Random.value < moveInChance)
                 {
-                    if(population < housingCap)
+                    if (population < housingCap)
                     {
                         population++;
                     }
-                    
-                    //Debug.Log("Discovered and moved in");
-                }
-                else
-                {
-                    //Debug.Log("Discovered but did not move in");
                 }
             }
         }
@@ -380,5 +404,18 @@ public class CityManager : MonoBehaviour
             yield return new WaitForSeconds(60f);
             funds += population * taxRate * 100.0f;
         }
+    }
+
+    private void UpdateUI()
+    {
+        fundsText.text = "Funds: $" + funds.ToString();
+        populationText.text = "Population: " + population.ToString();
+        happinessText.text = "Happiness: " + CalculateTotalHappiness().ToString();
+        economText.text = "Economic: " + CalculateTotalScore(economicGrid).ToString("f1");
+        enviroText.text = "Environmental: " + CalculateTotalScore(environmentalGrid).ToString("f1");
+        safetText.text = "Safety: " + CalculateTotalScore(safetyGrid).ToString("f1");
+        healtText.text = "Healthcare: " + CalculateTotalScore(healthcareGrid).ToString("f1");
+        recreText.text = "Recreation: " + CalculateTotalScore(recreationGrid).ToString("f1");
+        houseText.text = "Housing: " + CalculateTotalScore(housingGrid).ToString("f1");
     }
 }

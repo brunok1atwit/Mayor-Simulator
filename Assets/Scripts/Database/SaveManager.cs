@@ -13,7 +13,7 @@ public class SaveManager : MonoBehaviour
 
     public void SaveGame(int slotId)
     {
-        cityManager.SaveCity();
+        cityManager.SaveCity(slotId);
         Debug.Log("Game Saved! with ID "+ slotId);
     }
 

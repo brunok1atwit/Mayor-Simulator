@@ -9,7 +9,6 @@ public class DatabaseManager : MonoBehaviour
 
     void Awake()
     {
-      
         string dbPath = $"{Application.persistentDataPath}/MayorSimulator.db";
         _connection = new SQLiteConnection(dbPath, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
         CreateTables();
@@ -23,8 +22,8 @@ public class DatabaseManager : MonoBehaviour
 
     public class City
     {
-        [PrimaryKey, AutoIncrement]
-        public int Id { get; set; }
+        [PrimaryKey]
+        public int Id { get; set; }  // Remove AutoIncrement
         public string Name { get; set; }
         public int Population { get; set; }
         public float Funds { get; set; }
@@ -42,7 +41,24 @@ public class DatabaseManager : MonoBehaviour
 
     public void SaveCity(City city)
     {
-        _connection.Insert(city);
+        var existingCity = _connection.Table<City>().FirstOrDefault(c => c.Id == city.Id);
+        if (existingCity != null)
+        {
+            _connection.Update(city);
+        }
+        else
+        {
+            _connection.Insert(city);
+        }
+    }
+
+    public void ClearBuildingsForCity(int cityId)
+    {
+        var buildingsToDelete = _connection.Table<Building>().Where(b => b.CityId == cityId).ToList();
+        foreach (var building in buildingsToDelete)
+        {
+            _connection.Delete(building);
+        }
     }
 
     public void SaveBuilding(Building building)
