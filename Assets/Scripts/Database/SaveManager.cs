@@ -11,16 +11,20 @@ public class SaveManager : MonoBehaviour
         
     }
 
-    public void SaveGame(slotId)
+    public void SaveGame(int slotId)
     {
         cityManager.SaveCity();
-        Debug.Log("Game Saved!");
+        Debug.Log("Game Saved! with ID "+ slotId);
     }
 
     public void LoadGame(int slotId)
     {
-        cityManager.LoadCity(id); 
-        Debug.Log("Game Loaded!");
+        cityManager.LoadCity(slotId); 
+        Debug.Log("Game Loaded! with ID "+ slotId);
+    }
+    public void Open(GameObject item)
+    {
+        item.SetActive(!item.activeSelf);
     }
 }
 
