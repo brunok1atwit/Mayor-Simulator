@@ -18,7 +18,7 @@ public class MoveUI : MonoBehaviour
     {
         originalPosition = uiElement.anchoredPosition;
 
-        offScreenPosition = new Vector2(-440.0f, originalPosition.y);
+        offScreenPosition = new Vector2(307.0f, originalPosition.y);
     }
 
     void Update()

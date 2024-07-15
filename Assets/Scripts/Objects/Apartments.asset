@@ -21,9 +21,9 @@ MonoBehaviour:
   cost: 70
   proximityBonusRange: 1
   proximityBonusImpact: 10
-  economicImpact: 0
-  environmentalImpact: -0.1
-  safetyImpact: -0.05
-  healthcareImpact: 0
-  recreationImpact: 0
-  housingImpact: 0
+  economicImpact: 200
+  environmentalImpact: -100
+  safetyImpact: -50
+  healthcareImpact: 100
+  recreationImpact: 100
+  housingImpact: 300
