@@ -8,6 +8,7 @@ public class Rotate : MonoBehaviour
 {
     public float speed = 0.1f;
     GameObject gameObject;
+    public bool allowDrag = false;
 
     private bool mouseDown;
     private Vector3 mouseReference;
@@ -25,7 +26,7 @@ public class Rotate : MonoBehaviour
 
     void Update()
     {
-        if (mouseDown)
+        if (mouseDown && allowDrag)
         {
             mouseOffset = (Input.mousePosition - mouseReference);
 

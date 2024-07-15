@@ -4,7 +4,9 @@ using UnityEngine.UI;
 public class SaveManager : MonoBehaviour
 {
     public CityManager cityManager;
-
+    public GameObject savePad;
+    public GameObject save;
+    public GameObject load;
 
     void Start()
     {
@@ -24,7 +26,9 @@ public class SaveManager : MonoBehaviour
     }
     public void Open(GameObject item)
     {
-        item.SetActive(!item.activeSelf);
+        save.SetActive(!save.activeSelf);
+        load.SetActive(!load.activeSelf);
+        savePad.SetActive(!savePad.activeSelf);
     }
 }
 

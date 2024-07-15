@@ -4,10 +4,19 @@ public class BuildingPlacer : MonoBehaviour
 {
     public CityManager cityManager;
     public BuildingType selectedBuildingType;
+    public Camera defaultCamera;
+    public Camera rotateCamera;
+    public GameObject defaultCanvas;
+    public GameObject rotateCanvas;
+    Camera mainCamera;
 
+    private void Start()
+    {
+        mainCamera = defaultCamera;
+    }
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && mainCamera.name != "Rotate Camera")
         {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -34,7 +43,7 @@ public class BuildingPlacer : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) && mainCamera.name != "Rotate Camera")
         {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -62,6 +71,23 @@ public class BuildingPlacer : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void toRotate()
+    {
+        defaultCanvas.SetActive(false);
+        rotateCanvas.SetActive(true);
+        rotateCamera.gameObject.SetActive(true);
+        defaultCamera.gameObject.SetActive(false);
+        mainCamera = rotateCamera;
+    }
+    public void toMain()
+    {
+        defaultCanvas.SetActive(true);
+        rotateCanvas.SetActive(false);
+        rotateCamera.gameObject.SetActive(false);
+        defaultCamera.gameObject.SetActive(true);
+        mainCamera = defaultCamera;
     }
 
     public void SetSelectedBuilding(BuildingType buildingType)

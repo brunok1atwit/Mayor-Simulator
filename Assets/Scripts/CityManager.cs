@@ -78,7 +78,7 @@ public class CityManager : MonoBehaviour
 
     private void ClearCurrentState()
     {
-        // Clear the city grid
+  
         for (int x = 0; x < citySize; x++)
         {
             for (int y = 0; y < citySize; y++)
@@ -91,7 +91,7 @@ public class CityManager : MonoBehaviour
             }
         }
 
-        // Reset grids and other variables
+       
         InitializeCityGrids();
         placedBuildings.Clear();
         funds = 10000.00f;
@@ -109,7 +109,6 @@ public class CityManager : MonoBehaviour
             population = city.Population;
             funds = city.Funds;
 
-            // Load buildings
             List<Building> buildings = _databaseManager.GetBuildings(cityId);
             foreach (var building in buildings)
             {
@@ -136,10 +135,10 @@ public class CityManager : MonoBehaviour
         };
         _databaseManager.SaveCity(city);
 
-        // Clear existing buildings for this city ID before saving new ones
+        
         _databaseManager.ClearBuildingsForCity(cityId);
 
-        // Save buildings
+ 
         foreach (var kvp in placedBuildings)
         {
             Vector2Int position = kvp.Key;
