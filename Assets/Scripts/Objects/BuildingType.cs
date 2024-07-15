@@ -107,6 +107,7 @@ public class BuildingType : ScriptableObject
                 environmentalImpact = 50.0f;
                 safetyImpact = 200.0f;
                 healthcareImpact = 100.0f;
+                //800
                 educationImpact = 800.0f;
                 recreationImpact = 200.0f;
                 housingImpact = 200.0f;

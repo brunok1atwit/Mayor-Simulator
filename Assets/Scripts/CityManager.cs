@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 using static DatabaseManager;
 
 public class CityManager : MonoBehaviour
@@ -34,9 +35,22 @@ public class CityManager : MonoBehaviour
     public TextMeshProUGUI healtText;
     public TextMeshProUGUI recreText;
     public TextMeshProUGUI houseText;
+    public TextMeshProUGUI eduText;
+
     public float discoverChance = 0.95f;
     public float moveInChance = 2.0f;
     public float taxRate = 0.05f;
+
+    public Slider econSlider;
+    public Slider safetySlider;
+    public Slider healthSlider;
+    public Slider recSlider;
+    public Slider houseSlider;
+    public Slider eduSlider;
+    public Slider environmentSlider;
+
+  /*  public Slider[] sliders;*/
+
 
     private Dictionary<Vector2Int, BuildingType> placedBuildings = new Dictionary<Vector2Int, BuildingType>();
 
@@ -44,7 +58,8 @@ public class CityManager : MonoBehaviour
     {
         _databaseManager = FindObjectOfType<DatabaseManager>();
         InitializeCityGrids();
-
+/*        sliders = new Slider[] { econSlider, safetySlider, healthSlider, recSlider, houseSlider, eduSlider, environmentSlider };
+*/
         fundsText.text = "Funds: $" + funds.ToString();
         StartCoroutine(CheckPopulation());
         StartCoroutine(Taxes());
@@ -54,14 +69,30 @@ public class CityManager : MonoBehaviour
     {
         fundsText.text = "Funds: $" + funds.ToString();
         populationText.text = "Population: " + population.ToString();
-        happinessText.text = "Happiness: " + CalculateTotalHappiness().ToString();
-        economText.text = "Economic: " + CalculateTotalScore(economicGrid).ToString("f1");
-        enviroText.text = "Environmental: " + CalculateTotalScore(environmentalGrid).ToString("f1");
-        safetText.text = "Safety: " + CalculateTotalScore(safetyGrid).ToString("f1");
-        healtText.text = "Healthcare: " + CalculateTotalScore(healthcareGrid).ToString("f1");
-        recreText.text = "Recreation: " + CalculateTotalScore(recreationGrid).ToString("f1");
-        houseText.text = "Housing: " + CalculateTotalScore(housingGrid).ToString("f1");
-    }
+        happinessText.text = "Happiness: " ;
+        economText.text = "Economic: "  ;
+        enviroText.text = "Environmental: " ;
+        safetText.text = "Safety: " ;
+        healtText.text = "Healthcare: " ;
+        recreText.text = "Recreation: " ;
+        houseText.text = "Housing: " ;
+        eduText.text = "Education: " ;
+
+        houseSlider.value = CalculateTotalScore(housingGrid);
+        econSlider.value = CalculateTotalScore(economicGrid);
+        healthSlider.value = CalculateTotalScore(healthcareGrid);
+        recSlider.value = CalculateTotalScore(recreationGrid);
+        safetySlider.value = CalculateTotalScore(safetyGrid);
+        eduSlider.value = CalculateTotalScore(educationGrid);
+        environmentSlider.value = CalculateTotalScore(environmentalGrid);
+
+        //add logic for negatie happiness slider = red color
+       /* foreach (Slider s: sliders){
+            if (s.value < 0)
+            {
+                s.
+            }*/
+        }
 
     private void InitializeCityGrids()
     {
