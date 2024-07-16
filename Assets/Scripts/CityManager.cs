@@ -48,13 +48,13 @@ public class CityManager : MonoBehaviour
     public Slider eduSlider;
     public Slider environmentSlider;
 
-    private readonly float economicWeight = 0.15f;
+    private readonly float safetyWeight = 0.20f;
+    private readonly float economicWeight = 0.20f;
     private readonly float environmentalWeight = 0.15f;
-    private readonly float safetyWeight = 0.15f;
+    private readonly float educationWeight = 0.15f;
     private readonly float healthcareWeight = 0.10f;
-    private readonly float educationWeight = 0.10f;
-    private readonly float recreationWeight = 0.15f;
-    private readonly float housingWeight = 0.20f;
+    private readonly float recreationWeight = 0.10f;
+    private readonly float housingWeight = 0.10f;
 
     /*  public Slider[] sliders;*/
 
