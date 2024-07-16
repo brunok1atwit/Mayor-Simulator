@@ -38,7 +38,6 @@ public class CityManager : MonoBehaviour
     public TextMeshProUGUI eduText;
 
     public float discoverChance = 0.95f;
-    public float moveInChance = 2.0f;
     public float taxRate = 0.05f;
 
     public Slider econSlider;
@@ -49,7 +48,15 @@ public class CityManager : MonoBehaviour
     public Slider eduSlider;
     public Slider environmentSlider;
 
-  /*  public Slider[] sliders;*/
+    private readonly float economicWeight = 0.15f;
+    private readonly float environmentalWeight = 0.15f;
+    private readonly float safetyWeight = 0.15f;
+    private readonly float healthcareWeight = 0.10f;
+    private readonly float educationWeight = 0.10f;
+    private readonly float recreationWeight = 0.15f;
+    private readonly float housingWeight = 0.20f;
+
+    /*  public Slider[] sliders;*/
 
 
     private Dictionary<Vector2Int, BuildingType> placedBuildings = new Dictionary<Vector2Int, BuildingType>();
@@ -58,8 +65,8 @@ public class CityManager : MonoBehaviour
     {
         _databaseManager = FindObjectOfType<DatabaseManager>();
         InitializeCityGrids();
-/*        sliders = new Slider[] { econSlider, safetySlider, healthSlider, recSlider, houseSlider, eduSlider, environmentSlider };
-*/
+        /*        sliders = new Slider[] { econSlider, safetySlider, healthSlider, recSlider, houseSlider, eduSlider, environmentSlider };
+        */
         fundsText.text = "Funds: $" + funds.ToString();
         StartCoroutine(CheckPopulation());
         StartCoroutine(Taxes());
@@ -69,14 +76,14 @@ public class CityManager : MonoBehaviour
     {
         fundsText.text = "Funds: $" + funds.ToString();
         populationText.text = "Population: " + population.ToString();
-        happinessText.text = "Happiness: " ;
-        economText.text = "Economic: "  ;
-        enviroText.text = "Environmental: " ;
-        safetText.text = "Safety: " ;
-        healtText.text = "Healthcare: " ;
-        recreText.text = "Recreation: " ;
-        houseText.text = "Housing: " ;
-        eduText.text = "Education: " ;
+        happinessText.text = "Happiness: ";
+        economText.text = "Economic: ";
+        enviroText.text = "Environmental: ";
+        safetText.text = "Safety: ";
+        healtText.text = "Healthcare: ";
+        recreText.text = "Recreation: ";
+        houseText.text = "Housing: ";
+        eduText.text = "Education: ";
 
         houseSlider.value = CalculateTotalScore(housingGrid);
         econSlider.value = CalculateTotalScore(economicGrid);
@@ -87,12 +94,12 @@ public class CityManager : MonoBehaviour
         environmentSlider.value = CalculateTotalScore(environmentalGrid);
 
         //add logic for negatie happiness slider = red color
-       /* foreach (Slider s: sliders){
-            if (s.value < 0)
-            {
-                s.
-            }*/
-        }
+        /* foreach (Slider s: sliders){
+             if (s.value < 0)
+             {
+                 s.
+             }*/
+    }
 
     private void InitializeCityGrids()
     {
@@ -109,7 +116,7 @@ public class CityManager : MonoBehaviour
 
     private void ClearCurrentState()
     {
-  
+
         for (int x = 0; x < citySize; x++)
         {
             for (int y = 0; y < citySize; y++)
@@ -122,7 +129,7 @@ public class CityManager : MonoBehaviour
             }
         }
 
-       
+
         InitializeCityGrids();
         placedBuildings.Clear();
         funds = 10000.00f;
@@ -166,10 +173,10 @@ public class CityManager : MonoBehaviour
         };
         _databaseManager.SaveCity(city);
 
-        
+
         _databaseManager.ClearBuildingsForCity(cityId);
 
- 
+
         foreach (var kvp in placedBuildings)
         {
             Vector2Int position = kvp.Key;
@@ -414,9 +421,18 @@ public class CityManager : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(0.5f);
+
             if (Random.value < discoverChance)
             {
-                if (Random.value < moveInChance)
+                float totalWeightedScore = CalculateTotalScore(economicGrid) * economicWeight +
+                                           CalculateTotalScore(environmentalGrid) * environmentalWeight +
+                                           CalculateTotalScore(safetyGrid) * safetyWeight +
+                                           CalculateTotalScore(healthcareGrid) * healthcareWeight +
+                                           CalculateTotalScore(educationGrid) * educationWeight +
+                                           CalculateTotalScore(recreationGrid) * recreationWeight +
+                                           CalculateTotalScore(housingGrid) * housingWeight;
+
+                if (Random.value < totalWeightedScore)
                 {
                     if (population < housingCap)
                     {
