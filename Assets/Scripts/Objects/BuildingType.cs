@@ -52,7 +52,7 @@ public class BuildingType : ScriptableObject
                 recreationImpact = 100.0f;
                 housingImpact = 300.0f;
                 break;
-            case "Police Station":
+            case "Police":
                 economicImpact = 150.0f;
                 environmentalImpact = -50.0f;
                 safetyImpact = 300.0f;
