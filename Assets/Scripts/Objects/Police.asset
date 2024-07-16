@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Police
   m_EditorClassIdentifier: 
   category: 4
-  buildingName: Police Station
+  buildingName: Police
   buildingPrefab: {fileID: 1053119084242062312, guid: 5270ebdef5247d64e81e8bfac43df4a6,
     type: 3}
   happinessImpact: 10

@@ -150,7 +150,9 @@ public class CityManager : MonoBehaviour
             List<Building> buildings = _databaseManager.GetBuildings(cityId);
             foreach (var building in buildings)
             {
+                print(building.Type);
                 BuildingType buildingType = GetBuildingType(building.Type);
+                
                 if (buildingType != null)
                 {
                     PlaceBuildingFromLoad(buildingType, building.X, building.Y);
@@ -197,6 +199,7 @@ public class CityManager : MonoBehaviour
     {
         foreach (var buildingType in buildingTypes)
         {
+            print(buildingType.name);
             if (buildingType.buildingName == buildingName)
             {
                 return buildingType;

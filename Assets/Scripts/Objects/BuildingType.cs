@@ -95,7 +95,7 @@ public class BuildingType : ScriptableObject
 
             case "Park":
                 economicImpact = 100.0f;
-                environmentalImpact = 500.0f;
+                environmentalImpact = 1500.0f;
                 safetyImpact = 100.0f;
                 healthcareImpact = 200.0f;
                 educationImpact = 50.0f;

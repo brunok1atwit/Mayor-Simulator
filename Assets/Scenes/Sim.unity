@@ -96,7 +96,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 08e8d1e14a7beba42b10b21b807cfce9,
+    type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -5380,6 +5381,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0a346f486a30e7545850666d070d22cd, type: 2}
   - {fileID: 11400000, guid: 6ed61ac8721b43f4cabc3abe34562e67, type: 2}
   - {fileID: 11400000, guid: d7999b792c4ab8a498e59c7f85ed55bc, type: 2}
+  - {fileID: 11400000, guid: def3128b803b9344e8cd43f640d26029, type: 2}
   citySize: 10
   housingCap: 0
   funds: 10000
