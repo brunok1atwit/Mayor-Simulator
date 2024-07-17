@@ -56,6 +56,8 @@ public class CityManager : MonoBehaviour
     private readonly float educationWeight = 0.5f;
     private readonly float recreationWeight = 0.5f;
 
+    public TextMeshProUGUI TextFact;
+
     /*  public Slider[] sliders;*/
 
 
@@ -70,6 +72,7 @@ public class CityManager : MonoBehaviour
         fundsText.text = "Funds: $" + funds.ToString();
         StartCoroutine(CheckPopulation());
         StartCoroutine(Taxes());
+        StartCoroutine(Facts());
     }
 
     private void Update()
@@ -222,6 +225,18 @@ public class CityManager : MonoBehaviour
                 {
                     housingCap += 50;
                 }
+                if (buildingType.buildingName == "3 Family")
+                {
+                    housingCap += 9;
+                }
+                if (buildingType.buildingName == "House")
+                {
+                    housingCap += 4;
+                }
+                if (buildingType.buildingName == "Condos")
+                {
+                    housingCap += 19;
+                }
                 GameObject building = Instantiate(buildingType.buildingPrefab, new Vector3(x, 0, y), Quaternion.identity);
                 cityGrid[x, y] = building;
                 Vector2Int position = new Vector2Int(x, y);
@@ -288,7 +303,7 @@ public class CityManager : MonoBehaviour
 
     void ApplyDiminishingReturns(int x, int y, BuildingType buildingType, bool isRemoving)
     {
-        float diminishingFactor = isRemoving ? 1.0f / 0.9f : 0.9f;
+        float diminishingFactor = isRemoving ? 1.0f / 0.7f : 0.7f;
 
         for (int i = -1; i <= 1; i++)
         {
@@ -390,7 +405,7 @@ public class CityManager : MonoBehaviour
                     }
                     Destroy(building);
                     cityGrid[x, y] = null;
-                    funds += buildingType.cost / 2.0f;
+                    funds += buildingType.cost * 0.25f;
                     UpdateCityRatings(buildingType, x, y, true);
                     placedBuildings.Remove(position);
                 }
@@ -423,18 +438,27 @@ public class CityManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(0.5f);
+            float totalWeightedScore = CalculateTotalScore(economicGrid) * economicWeight +
+                           CalculateTotalScore(environmentalGrid) * environmentalWeight +
+                           CalculateTotalScore(safetyGrid) * safetyWeight +
+                           CalculateTotalScore(healthcareGrid) * healthcareWeight +
+                           CalculateTotalScore(educationGrid) * educationWeight +
+                           CalculateTotalScore(recreationGrid) * recreationWeight +
+                           CalculateTotalScore(housingGrid) * housingWeight;
+
+            if (totalWeightedScore <= 10)
+            {
+                yield return new WaitForSeconds(3.5f);
+            }
+            else
+            {
+                yield return new WaitForSeconds(3.5f / Mathf.Log(totalWeightedScore));
+            }
+
+            
 
             if (Random.value < discoverChance)
             {
-                float totalWeightedScore = CalculateTotalScore(economicGrid) * economicWeight +
-                                           CalculateTotalScore(environmentalGrid) * environmentalWeight +
-                                           CalculateTotalScore(safetyGrid) * safetyWeight +
-                                           CalculateTotalScore(healthcareGrid) * healthcareWeight +
-                                           CalculateTotalScore(educationGrid) * educationWeight +
-                                           CalculateTotalScore(recreationGrid) * recreationWeight +
-                                           CalculateTotalScore(housingGrid) * housingWeight;
-
                 if (Random.value < totalWeightedScore)
                 {
                     if (population < housingCap)
@@ -450,10 +474,49 @@ public class CityManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(60f);
+            yield return new WaitForSeconds(20f);
             funds += population * taxRate * 100.0f;
         }
     }
+
+    IEnumerator Facts()
+    {
+        int counter = 0;
+        while (true)
+        {
+            if(counter > 5)
+            {
+                counter = 0;
+            }
+            yield return new WaitForSeconds(20f);
+            if(counter == 0)
+            {
+                TextFact.text = "Urban spaces that are planned accordingly can provide better access to amenities, leading to efficient population growth.\r\n\r\nImpact on Population: Urban spaces that are planned accordingly can provide better access to amenities, leading to efficient population growth.";
+            }
+            else if(counter == 1)
+            {
+                TextFact.text = "Urbanization often leads to higher carbon emissions due to increased energy consumption.\r\n\r\nImpact on Environmental Scores: Urbanization can negatively impact environmental ratings if not managed sustainably. Investments in green infrastructure and renewable energy can mitigate these effects, improving overall environmental quality.\r\n\r\nImpact on Happiness: Environmental quality is a significant factor in happiness. Investments in green spaces and pollution reduction tend to leave residents happier.";
+            }
+            else if(counter == 2)
+            {
+                TextFact.text = "Population growth can increase economic ratings through increased consumer demand and labor supply. But this poses a new challenge of proper resource allocation and infrastructure development.\r\n\r\nImpact on Economic Scores: Effectively managing population growth can boost economic scores through increased labor and demand.\r\n\r\nImpact on Safety: Rapid population growth without proper infrastructure and public services can lead to safety issues. Thoughtful planning and proper investment in safety infrastructure are crucial to maintaining safety ratings.";
+            }
+            else if (counter == 3)
+            {
+                TextFact.text = "To achieve a balanced urban space, planning must consider economic, social, and environmental factors. \r\n\r\nImpact on Economic Scores: Integrated urbanization projects that consider economic, social, and environmental factors can enhance economic growth and improve economic scores.\r\n\r\nImpact on Safety: Sustainable urbanization includes investing in safety infrastructure, which can improve safety ratings.";
+            }
+            else if(counter == 4)
+            {
+                TextFact.text = "Balanced urban growth enhances the quality of life; this includes investments in recreational facilities and housing. \r\n\r\nImpact on Recreation: Investments in recreational facilities improve the quality of life and contribute to higher happiness scores.\r\n\r\nImpact on Housing: Providing affordable and adequate housing is essential for urban development and contributes to overall happiness and well-being.";
+            }
+            else if(counter == 5)
+            {
+                TextFact.text = "Well-designed tax policies can stimulate economic growth and fund essential public services. Impact on Economic Scores: Effective taxation policies can boost economic scores by providing the necessary funds for economic development projects and public services.\r\n\r\nImpact on Public Services: Taxes are crucial for funding public services, including healthcare, education, safety, and infrastructure, all of which contribute to overall city ratings.";
+            }
+            counter++;
+        }
+    }
+
 
     private void UpdateUI()
     {

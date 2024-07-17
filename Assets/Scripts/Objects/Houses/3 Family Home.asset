@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de273f744326cf3439f179882af13737, type: 3}
+  m_Name: 3 Family Home
+  m_EditorClassIdentifier: 
+  category: 6
+  buildingName: 3 Family
+  buildingPrefab: {fileID: 1053119084242062312, guid: 6a84e974d852c914a9ab33ef38b9bfbe,
+    type: 3}
+  happinessImpact: 12
+  educationImpact: 50
+  cost: 70
+  proximityBonusRange: 1
+  proximityBonusImpact: 10
+  economicImpact: 100
+  environmentalImpact: -200
+  safetyImpact: -100
+  healthcareImpact: 10
+  recreationImpact: 100
+  housingImpact: 100

@@ -72,6 +72,26 @@ public class BuildingType : ScriptableObject
                 housingImpact = 0.0f;
                 break;
 
+            case "Hospital":
+                economicImpact = 160.0f;
+                environmentalImpact = -30.0f;
+                safetyImpact = 450.0f;
+                healthcareImpact = 80.0f;
+                educationImpact = 10.0f;
+                recreationImpact = 5.0f;
+                housingImpact = 10.0f;
+                break;
+
+            case "Restaurant":
+                economicImpact = 200.0f;
+                environmentalImpact = -60.0f;
+                safetyImpact = 50.0f;
+                healthcareImpact = -30.0f;
+                educationImpact = -10.0f;
+                recreationImpact = 20.0f;
+                housingImpact = 0.0f;
+                break;
+
             case "House":
                 economicImpact = 100.0f;
                 environmentalImpact = -20.0f;
@@ -79,7 +99,7 @@ public class BuildingType : ScriptableObject
                 healthcareImpact = 20.0f;
                 educationImpact = 10.0f;
                 recreationImpact = 50.0f;
-                housingImpact = 250.0f;
+                housingImpact = 50.0f;
                 break;
 
             case "Bus Station":
@@ -116,10 +136,58 @@ public class BuildingType : ScriptableObject
                 economicImpact = 200.0f;
                 environmentalImpact = -200.0f;
                 safetyImpact = -100.0f;
-                healthcareImpact = 00.0f;
+                healthcareImpact = 20.0f;
                 educationImpact = 50.0f;
                 recreationImpact = 100.0f;
                 housingImpact = 50.0f;
+                break;
+            case "3 Family":
+                economicImpact = 100.0f;
+                environmentalImpact = -200.0f;
+                safetyImpact = -100.0f;
+                healthcareImpact = 10.0f;
+                educationImpact = 50.0f;
+                recreationImpact = 100.0f;
+                housingImpact = 100.0f;
+                break;
+            case "Condos":
+                economicImpact = 160.0f;
+                environmentalImpact = -100.0f;
+                safetyImpact = -10.0f;
+                healthcareImpact = 10.0f;
+                educationImpact = 100.0f;
+                recreationImpact = 100.0f;
+                housingImpact = 20.0f;
+                break;
+
+            case "College":
+                economicImpact = 200.0f;
+                environmentalImpact = -50.0f;
+                safetyImpact = 20.0f;
+                healthcareImpact = -80.0f;
+                educationImpact = 100.0f;
+                recreationImpact = 20.0f;
+                housingImpact = 10.0f;
+                break;
+
+            case "Museum":
+                economicImpact = 100.0f;
+                environmentalImpact = -10.0f;
+                safetyImpact = 0.0f;
+                healthcareImpact = 0.0f;
+                educationImpact = 100.0f;
+                recreationImpact = 100.0f;
+                housingImpact = 00.0f;
+                break;
+
+            case "Library":
+                economicImpact = 20.0f;
+                environmentalImpact = -10.0f;
+                safetyImpact = 0.0f;
+                healthcareImpact = 0.0f;
+                educationImpact = 150.0f;
+                recreationImpact = 50.0f;
+                housingImpact = 00.0f;
                 break;
         }
 

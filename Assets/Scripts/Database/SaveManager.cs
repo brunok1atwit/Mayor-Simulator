@@ -7,6 +7,7 @@ public class SaveManager : MonoBehaviour
     public GameObject savePad;
     public GameObject save;
     public GameObject load;
+    public GameObject facts;
 
     void Start()
     {
@@ -28,6 +29,7 @@ public class SaveManager : MonoBehaviour
     {
         save.SetActive(!save.activeSelf);
         load.SetActive(!load.activeSelf);
+        facts.SetActive(!facts.activeSelf);
         savePad.SetActive(!savePad.activeSelf);
     }
 }
