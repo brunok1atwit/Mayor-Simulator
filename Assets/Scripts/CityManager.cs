@@ -69,6 +69,7 @@ public class CityManager : MonoBehaviour
         StartCoroutine(CheckPopulation());
         StartCoroutine(Taxes());
         StartCoroutine(Facts());
+
     }
 
     private void Update()
@@ -489,27 +490,27 @@ public class CityManager : MonoBehaviour
             yield return new WaitForSeconds(20f);
             if (counter == 0)
             {
-                TextFact.text = "Urban spaces that are planned accordingly can provide better access to amenities, leading to efficient population growth.\r\n\r\nImpact on Population: Urban spaces that are planned accordingly can provide better access to amenities, leading to efficient population growth.";
+                TextFact.text = "Urban spaces that are planned accordingly can provide better access to amenities, leading to efficient population growth.\r\n\r\nImpact on Population: Urban spaces that are planned accordingly can provide better access to amenities, leading to efficient population growth.<sup>1</sup>";
             }
             else if (counter == 1)
             {
-                TextFact.text = "Urbanization often leads to higher carbon emissions due to increased energy consumption.\r\n\r\nImpact on Environmental Scores: Urbanization can negatively impact environmental ratings if not managed sustainably. Investments in green infrastructure and renewable energy can mitigate these effects, improving overall environmental quality.\r\n\r\nImpact on Happiness: Environmental quality is a significant factor in happiness. Investments in green spaces and pollution reduction tend to leave residents happier.";
+                TextFact.text = "Urbanization often leads to higher carbon emissions due to increased energy consumption.\r\n\r\nImpact on Environmental Scores: Urbanization can negatively impact environmental ratings if not managed sustainably. Investments in green infrastructure and renewable energy can mitigate these effects, improving overall environmental quality.\r\n\r\nImpact on Happiness: Environmental quality is a significant factor in happiness. Investments in green spaces and pollution reduction tend to leave residents happier.<sup>2</sup>";
             }
             else if (counter == 2)
             {
-                TextFact.text = "Population growth can increase economic ratings through increased consumer demand and labor supply. But this poses a new challenge of proper resource allocation and infrastructure development.\r\n\r\nImpact on Economic Scores: Effectively managing population growth can boost economic scores through increased labor and demand.\r\n\r\nImpact on Safety: Rapid population growth without proper infrastructure and public services can lead to safety issues. Thoughtful planning and proper investment in safety infrastructure are crucial to maintaining safety ratings.";
+                TextFact.text = "Population growth can increase economic ratings through increased consumer demand and labor supply. But this poses a new challenge of proper resource allocation and infrastructure development.\r\n\r\nImpact on Economic Scores: Effectively managing population growth can boost economic scores through increased labor and demand.\r\n\r\nImpact on Safety: Rapid population growth without proper infrastructure and public services can lead to safety issues. Thoughtful planning and proper investment in safety infrastructure are crucial to maintaining safety ratings.<sup>3</sup>";
             }
             else if (counter == 3)
             {
-                TextFact.text = "To achieve a balanced urban space, planning must consider economic, social, and environmental factors. \r\n\r\nImpact on Economic Scores: Integrated urbanization projects that consider economic, social, and environmental factors can enhance economic growth and improve economic scores.\r\n\r\nImpact on Safety: Sustainable urbanization includes investing in safety infrastructure, which can improve safety ratings.";
+                TextFact.text = "To achieve a balanced urban space, planning must consider economic, social, and environmental factors. \r\n\r\nImpact on Economic Scores: Integrated urbanization projects that consider economic, social, and environmental factors can enhance economic growth and improve economic scores.\r\n\r\nImpact on Safety: Sustainable urbanization includes investing in safety infrastructure, which can improve safety ratings.<sup>4</sup>";
             }
             else if (counter == 4)
             {
-                TextFact.text = "Balanced urban growth enhances the quality of life; this includes investments in recreational facilities and housing. \r\n\r\nImpact on Recreation: Investments in recreational facilities improve the quality of life and contribute to higher happiness scores.\r\n\r\nImpact on Housing: Providing affordable and adequate housing is essential for urban development and contributes to overall happiness and well-being.";
+                TextFact.text = "Balanced urban growth enhances the quality of life; this includes investments in recreational facilities and housing. \r\n\r\nImpact on Recreation: Investments in recreational facilities improve the quality of life and contribute to higher happiness scores.\r\n\r\nImpact on Housing: Providing affordable and adequate housing is essential for urban development and contributes to overall happiness and well-being.<sup>5</sup>";
             }
             else if (counter == 5)
             {
-                TextFact.text = "Well-designed tax policies can stimulate economic growth and fund essential public services. Impact on Economic Scores: Effective taxation policies can boost economic scores by providing the necessary funds for economic development projects and public services.\r\n\r\nImpact on Public Services: Taxes are crucial for funding public services, including healthcare, education, safety, and infrastructure, all of which contribute to overall city ratings.";
+                TextFact.text = "Well-designed tax policies can stimulate economic growth and fund essential public services. Impact on Economic Scores: Effective taxation policies can boost economic scores by providing the necessary funds for economic development projects and public services.\r\n\r\nImpact on Public Services: Taxes are crucial for funding public services, including healthcare, education, safety, and infrastructure, all of which contribute to overall city ratings.<sup>6</sup>";
             }
             counter++;
         }
