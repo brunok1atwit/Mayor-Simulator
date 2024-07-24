@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: 2
   buildingName: Street
-  buildingPrefab: {fileID: 1053119084242062312, guid: 6c05dd85ff900934b98da606d89c5313,
+  buildingPrefab: {fileID: 1053119084242062312, guid: 27d72d77a0886e34eb32aea7abf2f741,
     type: 3}
   happinessImpact: 10
   educationImpact: 50
@@ -24,6 +24,6 @@ MonoBehaviour:
   economicImpact: 200
   environmentalImpact: -200
   safetyImpact: -100
-  healthcareImpact: 0
+  healthcareImpact: 20
   recreationImpact: 100
   housingImpact: 50
