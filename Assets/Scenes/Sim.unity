@@ -4385,9 +4385,9 @@ RectTransform:
   m_Children:
   - {fileID: 1449746408}
   - {fileID: 1103751415}
+  - {fileID: 186758724}
   - {fileID: 1885315906}
   - {fileID: 1165590168}
-  - {fileID: 186758724}
   - {fileID: 285941239}
   - {fileID: 1516625226}
   - {fileID: 386940321}
@@ -17530,7 +17530,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1885315906
 RectTransform:
   m_ObjectHideFlags: 0
