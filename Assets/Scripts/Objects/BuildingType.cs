@@ -9,7 +9,17 @@ public enum BuildingCategory
     Healthcare,
     Security,
     Commercial,
-    Residential
+    Residential,
+    Zoning
+}
+
+public enum ZoneType
+{
+    Residential,
+    Commercial,
+    Industrial,
+    PublicUse,
+    MixedUse
 }
 
 [CreateAssetMenu(fileName = "BuildingType", menuName = "ScriptableObjects/BuildingType", order = 1)]
@@ -18,11 +28,13 @@ public class BuildingType : ScriptableObject
     public BuildingCategory category;
     public string buildingName;
     public GameObject buildingPrefab;
+    public GameObject zonePrefab;
     public float happinessImpact;
     public float educationImpact;
     public float cost;
+    public ZoneType zoneType;
 
- 
+
     public float proximityBonusRange;
     public float proximityBonusImpact;
 

@@ -13,6 +13,7 @@ public class CityManager : MonoBehaviour
 
     public List<BuildingType> buildingTypes;
     public GameObject[,] cityGrid;
+    public ZoneType[,] zoneGrid;
     public int citySize = 10;
     public float[,] happinessGrid;
     public float[,] economicGrid;
@@ -58,17 +59,12 @@ public class CityManager : MonoBehaviour
 
     public TextMeshProUGUI TextFact;
 
-    /*  public Slider[] sliders;*/
-
-
     private Dictionary<Vector2Int, BuildingType> placedBuildings = new Dictionary<Vector2Int, BuildingType>();
 
     void Start()
     {
         _databaseManager = FindObjectOfType<DatabaseManager>();
         InitializeCityGrids();
-        /*        sliders = new Slider[] { econSlider, safetySlider, healthSlider, recSlider, houseSlider, eduSlider, environmentSlider };
-        */
         fundsText.text = "Funds: $" + funds.ToString();
         StartCoroutine(CheckPopulation());
         StartCoroutine(Taxes());
@@ -95,18 +91,12 @@ public class CityManager : MonoBehaviour
         safetySlider.value = CalculateTotalScore(safetyGrid);
         eduSlider.value = CalculateTotalScore(educationGrid);
         environmentSlider.value = CalculateTotalScore(environmentalGrid);
-
-        //add logic for negatie happiness slider = red color
-        /* foreach (Slider s: sliders){
-             if (s.value < 0)
-             {
-                 s.
-             }*/
     }
 
     private void InitializeCityGrids()
     {
         cityGrid = new GameObject[citySize, citySize];
+        zoneGrid = new ZoneType[citySize, citySize];
         happinessGrid = new float[citySize, citySize];
         economicGrid = new float[citySize, citySize];
         environmentalGrid = new float[citySize, citySize];
@@ -119,7 +109,6 @@ public class CityManager : MonoBehaviour
 
     private void ClearCurrentState()
     {
-
         for (int x = 0; x < citySize; x++)
         {
             for (int y = 0; y < citySize; y++)
@@ -131,7 +120,6 @@ public class CityManager : MonoBehaviour
                 }
             }
         }
-
 
         InitializeCityGrids();
         placedBuildings.Clear();
@@ -155,7 +143,7 @@ public class CityManager : MonoBehaviour
             {
                 print(building.Type);
                 BuildingType buildingType = GetBuildingType(building.Type);
-                
+
                 if (buildingType != null)
                 {
                     PlaceBuildingFromLoad(buildingType, building.X, building.Y);
@@ -178,9 +166,7 @@ public class CityManager : MonoBehaviour
         };
         _databaseManager.SaveCity(city);
 
-
         _databaseManager.ClearBuildingsForCity(cityId);
-
 
         foreach (var kvp in placedBuildings)
         {
@@ -211,10 +197,24 @@ public class CityManager : MonoBehaviour
         return null;
     }
 
+    public void SetZone(int x, int y, ZoneType zoneType)
+    {
+        if (x >= 0 && x < citySize && y >= 0 && y < citySize)
+        {
+            zoneGrid[x, y] = zoneType;
+        }
+    }
+
     public void PlaceBuilding(BuildingType buildingType, int x, int y)
     {
         if (x >= 0 && x < citySize && y >= 0 && y < citySize)
         {
+            if (zoneGrid[x, y] != buildingType.zoneType && !(zoneGrid[x, y] == ZoneType.MixedUse && buildingType.zoneType != ZoneType.Industrial))
+            {
+                Debug.LogWarning("Cannot place building in this zone type.");
+                return;
+            }
+
             if (cityGrid[x, y] != null)
             {
                 Debug.Log("Building Here.");
@@ -455,8 +455,6 @@ public class CityManager : MonoBehaviour
                 yield return new WaitForSeconds(3.5f / Mathf.Log(totalWeightedScore));
             }
 
-            
-
             if (Random.value < discoverChance)
             {
                 if (Random.value < totalWeightedScore)
@@ -484,20 +482,20 @@ public class CityManager : MonoBehaviour
         int counter = 0;
         while (true)
         {
-            if(counter > 5)
+            if (counter > 5)
             {
                 counter = 0;
             }
             yield return new WaitForSeconds(20f);
-            if(counter == 0)
+            if (counter == 0)
             {
                 TextFact.text = "Urban spaces that are planned accordingly can provide better access to amenities, leading to efficient population growth.\r\n\r\nImpact on Population: Urban spaces that are planned accordingly can provide better access to amenities, leading to efficient population growth.";
             }
-            else if(counter == 1)
+            else if (counter == 1)
             {
                 TextFact.text = "Urbanization often leads to higher carbon emissions due to increased energy consumption.\r\n\r\nImpact on Environmental Scores: Urbanization can negatively impact environmental ratings if not managed sustainably. Investments in green infrastructure and renewable energy can mitigate these effects, improving overall environmental quality.\r\n\r\nImpact on Happiness: Environmental quality is a significant factor in happiness. Investments in green spaces and pollution reduction tend to leave residents happier.";
             }
-            else if(counter == 2)
+            else if (counter == 2)
             {
                 TextFact.text = "Population growth can increase economic ratings through increased consumer demand and labor supply. But this poses a new challenge of proper resource allocation and infrastructure development.\r\n\r\nImpact on Economic Scores: Effectively managing population growth can boost economic scores through increased labor and demand.\r\n\r\nImpact on Safety: Rapid population growth without proper infrastructure and public services can lead to safety issues. Thoughtful planning and proper investment in safety infrastructure are crucial to maintaining safety ratings.";
             }
@@ -505,18 +503,17 @@ public class CityManager : MonoBehaviour
             {
                 TextFact.text = "To achieve a balanced urban space, planning must consider economic, social, and environmental factors. \r\n\r\nImpact on Economic Scores: Integrated urbanization projects that consider economic, social, and environmental factors can enhance economic growth and improve economic scores.\r\n\r\nImpact on Safety: Sustainable urbanization includes investing in safety infrastructure, which can improve safety ratings.";
             }
-            else if(counter == 4)
+            else if (counter == 4)
             {
                 TextFact.text = "Balanced urban growth enhances the quality of life; this includes investments in recreational facilities and housing. \r\n\r\nImpact on Recreation: Investments in recreational facilities improve the quality of life and contribute to higher happiness scores.\r\n\r\nImpact on Housing: Providing affordable and adequate housing is essential for urban development and contributes to overall happiness and well-being.";
             }
-            else if(counter == 5)
+            else if (counter == 5)
             {
                 TextFact.text = "Well-designed tax policies can stimulate economic growth and fund essential public services. Impact on Economic Scores: Effective taxation policies can boost economic scores by providing the necessary funds for economic development projects and public services.\r\n\r\nImpact on Public Services: Taxes are crucial for funding public services, including healthcare, education, safety, and infrastructure, all of which contribute to overall city ratings.";
             }
             counter++;
         }
     }
-
 
     private void UpdateUI()
     {

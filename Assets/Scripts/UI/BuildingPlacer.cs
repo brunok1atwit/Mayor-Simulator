@@ -14,6 +14,7 @@ public class BuildingPlacer : MonoBehaviour
     {
         mainCamera = defaultCamera;
     }
+
     void Update()
     {
         if (Input.GetMouseButtonDown(0) && mainCamera.name != "Rotate Camera")
@@ -27,18 +28,17 @@ public class BuildingPlacer : MonoBehaviour
                 int x = Mathf.RoundToInt(point.x);
                 int y = Mathf.RoundToInt(point.z);
 
-                //check if can place
-                Debug.Log(hit.transform.gameObject.tag);
-                if (!(hit.transform.gameObject.CompareTag("Street")))
+                if (selectedBuildingType.zonePrefab != null)
+                {
+                    PlaceZone(selectedBuildingType, x, y);
+                }
+                else if (IsValidPlacement(selectedBuildingType, x, y))
                 {
                     cityManager.PlaceBuilding(selectedBuildingType, x, y);
-                    //deduct money
-                    //cityManager.funds -= selectedBuildingType.cost;
                 }
                 else
                 {
-                    Debug.Log("Cant place on street");
-
+                    Debug.Log("Invalid placement according to zoning regulations.");
                 }
             }
         }
@@ -54,23 +54,43 @@ public class BuildingPlacer : MonoBehaviour
                 int x = Mathf.RoundToInt(point.x);
                 int y = Mathf.RoundToInt(point.z);
 
-                //check if can place
                 Debug.Log(hit.transform.gameObject.tag);
                 if (!(hit.transform.gameObject.CompareTag("Street")))
                 {
                     cityManager.RemoveBuilding(x, y);
-                    //deduct money
-                    //cityManager.funds += selectedBuildingType.cost/2;
-                    //cityManager.fundsText.text = cityManager.funds;
-
-
                 }
                 else
                 {
-                    Debug.Log("Cant place on street");
+                    Debug.Log("Can't place on street");
                 }
             }
         }
+    }
+
+    void PlaceZone(BuildingType zoneType, int x, int y)
+    {
+        if (x >= 0 && x < cityManager.citySize && y >= 0 && y < cityManager.citySize)
+        {
+            cityManager.SetZone(x, y, zoneType.zoneType);
+            GameObject zone = Instantiate(zoneType.zonePrefab, new Vector3(x, 0, y), Quaternion.identity);
+            zone.name = zoneType.buildingName + " Zone";
+            cityManager.cityGrid[x, y] = zone;
+        }
+        else
+        {
+            Debug.LogWarning("Position out of bounds");
+        }
+    }
+
+    public void SetSelectedBuilding(BuildingType buildingType)
+    {
+        selectedBuildingType = buildingType;
+    }
+
+    bool IsValidPlacement(BuildingType buildingType, int x, int y)
+    {
+        var zoneAtLocation = cityManager.zoneGrid[x, y];
+        return zoneAtLocation == buildingType.zoneType || (zoneAtLocation == ZoneType.MixedUse && buildingType.zoneType != ZoneType.Industrial);
     }
 
     public void toRotate()
@@ -81,6 +101,7 @@ public class BuildingPlacer : MonoBehaviour
         defaultCamera.gameObject.SetActive(false);
         mainCamera = rotateCamera;
     }
+
     public void toMain()
     {
         defaultCanvas.SetActive(true);
@@ -88,10 +109,5 @@ public class BuildingPlacer : MonoBehaviour
         rotateCamera.gameObject.SetActive(false);
         defaultCamera.gameObject.SetActive(true);
         mainCamera = defaultCamera;
-    }
-
-    public void SetSelectedBuilding(BuildingType buildingType)
-    {
-        selectedBuildingType = buildingType;
     }
 }

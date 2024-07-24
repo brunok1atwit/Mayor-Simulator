@@ -11,6 +11,7 @@ public class SidePanelController : MonoBehaviour
     public GameObject buttonPrefab; // Assign the prefab for the building buttons
     public Transform buttonContainer; // Assign the container where buttons will be instantiated
     public BuildingType[] buildings; // Assign all building types in the editor
+    public BuildingType[] zones; // Add this line to assign all zone types in the editor
     private bool isPanelVisible = false;
     private float panelWidth;
     private List<GameObject> currentButtons = new List<GameObject>();
@@ -79,6 +80,20 @@ public class SidePanelController : MonoBehaviour
                     newButton.GetComponent<Image>().sprite = building.buildingPrefab.GetComponent<SpriteRenderer>().sprite; // Assuming prefab has a SpriteRenderer
                     newButton.GetComponent<BuildingUIButton>().buildingPlacer = FindObjectOfType<BuildingPlacer>();
                     newButton.GetComponent<BuildingUIButton>().buildingType = building;
+                    currentButtons.Add(newButton);
+                }
+            }
+
+            // Add zone buttons
+            if (selectedCategory == BuildingCategory.Zoning) // Ensure you have a Zoning category or similar
+            {
+                foreach (BuildingType zone in zones)
+                {
+                    GameObject newButton = Instantiate(buttonPrefab, buttonContainer);
+                    newButton.GetComponentInChildren<Text>().text = zone.buildingName;
+                    newButton.GetComponent<Image>().sprite = zone.zonePrefab.GetComponent<SpriteRenderer>().sprite; // Assuming prefab has a SpriteRenderer
+                    newButton.GetComponent<BuildingUIButton>().buildingPlacer = FindObjectOfType<BuildingPlacer>();
+                    newButton.GetComponent<BuildingUIButton>().buildingType = zone;
                     currentButtons.Add(newButton);
                 }
             }
