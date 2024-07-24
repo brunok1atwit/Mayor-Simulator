@@ -10,23 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: de273f744326cf3439f179882af13737, type: 3}
-  m_Name: Store
+  m_Name: Commercial
   m_EditorClassIdentifier: 
-  category: 1
-  buildingName: Store
-  buildingPrefab: {fileID: 1053119084242062312, guid: 909dceb3481c79a489347705182d0049,
+  category: 7
+  buildingName: Commercial
+  buildingPrefab: {fileID: 0}
+  zonePrefab: {fileID: 1053119084242062312, guid: 0be2e5469460804488f3d7440956e97b,
     type: 3}
-  zonePrefab: {fileID: 0}
   happinessImpact: 0
-  educationImpact: 50
+  educationImpact: 0
   cost: 0
   zoneType: 1
-  isZone: 0
+  isZone: 1
   proximityBonusRange: 0
   proximityBonusImpact: 0
-  economicImpact: 100
-  environmentalImpact: 1500
-  safetyImpact: 100
-  healthcareImpact: 200
-  recreationImpact: 500
-  housingImpact: 100
+  economicImpact: 0
+  environmentalImpact: 0
+  safetyImpact: 0
+  healthcareImpact: 0
+  recreationImpact: 0
+  housingImpact: 0

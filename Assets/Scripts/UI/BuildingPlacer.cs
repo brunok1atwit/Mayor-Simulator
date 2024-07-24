@@ -28,9 +28,13 @@ public class BuildingPlacer : MonoBehaviour
                 int x = Mathf.RoundToInt(point.x);
                 int y = Mathf.RoundToInt(point.z);
 
-                if (selectedBuildingType.zonePrefab != null)
+                if (selectedBuildingType.zonePrefab != null && selectedBuildingType.isZone)
                 {
-                    PlaceZone(selectedBuildingType, x, y);
+                    if (cityManager.zoneGrid[x, y] == ZoneType.None)
+                        PlaceZone(selectedBuildingType, x, y);
+                    else
+                        Debug.Log("Zone already here!");
+
                 }
                 else if (IsValidPlacement(selectedBuildingType, x, y))
                 {
@@ -74,7 +78,7 @@ public class BuildingPlacer : MonoBehaviour
             cityManager.SetZone(x, y, zoneType.zoneType);
             GameObject zone = Instantiate(zoneType.zonePrefab, new Vector3(x, 0, y), Quaternion.identity);
             zone.name = zoneType.buildingName + " Zone";
-            cityManager.cityGrid[x, y] = zone;
+            cityManager.zoneGrid[x, y] = zoneType.zoneType;
         }
         else
         {

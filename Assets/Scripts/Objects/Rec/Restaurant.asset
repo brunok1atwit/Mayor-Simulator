@@ -16,9 +16,12 @@ MonoBehaviour:
   buildingName: Restaurant
   buildingPrefab: {fileID: 1053119084242062312, guid: a3376d75f24638b439aaf9f634560c54,
     type: 3}
+  zonePrefab: {fileID: 0}
   happinessImpact: 0
   educationImpact: -10
   cost: 0
+  zoneType: 1
+  isZone: 0
   proximityBonusRange: 0
   proximityBonusImpact: 0
   economicImpact: 200

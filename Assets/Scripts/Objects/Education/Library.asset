@@ -16,14 +16,17 @@ MonoBehaviour:
   buildingName: Library
   buildingPrefab: {fileID: 1053119084242062312, guid: c230c1009862bc94d869fa35039f7efe,
     type: 3}
+  zonePrefab: {fileID: 0}
   happinessImpact: 100
-  educationImpact: 100
+  educationImpact: 150
   cost: 200
+  zoneType: 3
+  isZone: 0
   proximityBonusRange: 100
   proximityBonusImpact: 100
-  economicImpact: 100
+  economicImpact: 20
   environmentalImpact: -10
   safetyImpact: 0
   healthcareImpact: 0
-  recreationImpact: 100
+  recreationImpact: 50
   housingImpact: 0

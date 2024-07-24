@@ -16,14 +16,17 @@ MonoBehaviour:
   buildingName: Museum
   buildingPrefab: {fileID: 1053119084242062312, guid: a76f5261c03d50c4d8ba81453110cfe4,
     type: 3}
+  zonePrefab: {fileID: 0}
   happinessImpact: 100
   educationImpact: 100
   cost: 200
+  zoneType: 3
+  isZone: 0
   proximityBonusRange: 100
   proximityBonusImpact: 100
-  economicImpact: 200
-  environmentalImpact: -50
-  safetyImpact: 20
-  healthcareImpact: -80
-  recreationImpact: 20
-  housingImpact: 10
+  economicImpact: 100
+  environmentalImpact: -10
+  safetyImpact: 0
+  healthcareImpact: 0
+  recreationImpact: 100
+  housingImpact: 0

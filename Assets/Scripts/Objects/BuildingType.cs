@@ -15,6 +15,7 @@ public enum BuildingCategory
 
 public enum ZoneType
 {
+    None,
     Residential,
     Commercial,
     Industrial,
@@ -33,7 +34,7 @@ public class BuildingType : ScriptableObject
     public float educationImpact;
     public float cost;
     public ZoneType zoneType;
-
+    public bool isZone;
 
     public float proximityBonusRange;
     public float proximityBonusImpact;

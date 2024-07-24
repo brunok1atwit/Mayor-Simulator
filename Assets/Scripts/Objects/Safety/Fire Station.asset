@@ -16,14 +16,17 @@ MonoBehaviour:
   buildingName: Fire Station
   buildingPrefab: {fileID: 1053119084242062312, guid: f8ee72cedc7faf649aef9fc37d3a34e3,
     type: 3}
+  zonePrefab: {fileID: 0}
   happinessImpact: 10
-  educationImpact: 30
+  educationImpact: 20
   cost: 70
+  zoneType: 4
+  isZone: 0
   proximityBonusRange: 0
   proximityBonusImpact: 0
-  economicImpact: 150
-  environmentalImpact: -50
-  safetyImpact: 300
-  healthcareImpact: 50
-  recreationImpact: 20
+  economicImpact: 120
+  environmentalImpact: -40
+  safetyImpact: 350
+  healthcareImpact: 40
+  recreationImpact: 10
   housingImpact: 0

@@ -16,14 +16,17 @@ MonoBehaviour:
   buildingName: College
   buildingPrefab: {fileID: 1053119084242062312, guid: 3ca83277b1de3b1459f0258db966a69f,
     type: 3}
+  zonePrefab: {fileID: 0}
   happinessImpact: 100
-  educationImpact: 800
+  educationImpact: 100
   cost: 200
+  zoneType: 3
+  isZone: 0
   proximityBonusRange: 100
   proximityBonusImpact: 100
-  economicImpact: 300
-  environmentalImpact: 50
-  safetyImpact: 200
-  healthcareImpact: 100
-  recreationImpact: 200
-  housingImpact: 200
+  economicImpact: 200
+  environmentalImpact: -50
+  safetyImpact: 20
+  healthcareImpact: -80
+  recreationImpact: 20
+  housingImpact: 10
