@@ -141,7 +141,25 @@ public class BuildingType : ScriptableObject
                 recreationImpact = 100.0f;
                 housingImpact = 50.0f;
                 break;
-            case "3 Family":
+            case "Four-way Intersection":
+                economicImpact = 200.0f;
+                environmentalImpact = -200.0f;
+                safetyImpact = -100.0f;
+                healthcareImpact = 20.0f;
+                educationImpact = 50.0f;
+                recreationImpact = 100.0f;
+                housingImpact = 50.0f;
+                break;
+            case "T-Intersection":
+                economicImpact = 200.0f;
+                environmentalImpact = -200.0f;
+                safetyImpact = -100.0f;
+                healthcareImpact = 20.0f;
+                educationImpact = 50.0f;
+                recreationImpact = 100.0f;
+                housingImpact = 50.0f;
+                break;
+            case "End Piece":
                 economicImpact = 100.0f;
                 environmentalImpact = -200.0f;
                 safetyImpact = -100.0f;
@@ -149,6 +167,15 @@ public class BuildingType : ScriptableObject
                 educationImpact = 50.0f;
                 recreationImpact = 100.0f;
                 housingImpact = 100.0f;
+                break;
+            case "Curve":
+                economicImpact = 200.0f;
+                environmentalImpact = -200.0f;
+                safetyImpact = -100.0f;
+                healthcareImpact = 20.0f;
+                educationImpact = 50.0f;
+                recreationImpact = 100.0f;
+                housingImpact = 50.0f;
                 break;
             case "Condos":
                 economicImpact = 160.0f;
