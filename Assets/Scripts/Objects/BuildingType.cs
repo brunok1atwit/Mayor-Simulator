@@ -219,6 +219,24 @@ public class BuildingType : ScriptableObject
                 recreationImpact = 100.0f;
                 housingImpact = 00.0f;
                 break;
+            case "Power Plant":
+                economicImpact = 100.0f;
+                environmentalImpact = -10.0f;
+                safetyImpact = 0.0f;
+                healthcareImpact = 0.0f;
+                educationImpact = 100.0f;
+                recreationImpact = 100.0f;
+                housingImpact = 00.0f;
+                break;
+            case "Nuclear Power Plant":
+                economicImpact = 100.0f;
+                environmentalImpact = -10.0f;
+                safetyImpact = 0.0f;
+                healthcareImpact = 0.0f;
+                educationImpact = 100.0f;
+                recreationImpact = 100.0f;
+                housingImpact = 00.0f;
+                break;
 
             case "Library":
                 economicImpact = 20.0f;
