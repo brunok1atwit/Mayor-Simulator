@@ -16,9 +16,12 @@ MonoBehaviour:
   buildingName: Apartments
   buildingPrefab: {fileID: 1053119084242062312, guid: 85c3928f5c70e49489adee380511d0ea,
     type: 3}
+  zonePrefab: {fileID: 0}
   happinessImpact: 12
   educationImpact: 5
   cost: 70
+  zoneType: 1
+  isZone: 0
   proximityBonusRange: 1
   proximityBonusImpact: 10
   economicImpact: 200

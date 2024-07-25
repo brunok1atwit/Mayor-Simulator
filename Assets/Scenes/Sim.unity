@@ -7447,6 +7447,7 @@ MonoBehaviour:
   eduSlider: {fileID: 797574230}
   environmentSlider: {fileID: 106671757}
   TextFact: {fileID: 2083154699}
+  smoke: {fileID: 7130496836261943941, guid: 1cb32a748f9e60d40af7f93bb0ed85d2, type: 3}
 --- !u!4 &898518845
 Transform:
   m_ObjectHideFlags: 0

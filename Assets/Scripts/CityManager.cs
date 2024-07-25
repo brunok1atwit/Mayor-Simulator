@@ -61,6 +61,8 @@ public class CityManager : MonoBehaviour
 
     private Dictionary<Vector2Int, BuildingType> placedBuildings = new Dictionary<Vector2Int, BuildingType>();
 
+    public GameObject smoke;
+
     void Start()
     {
         _databaseManager = FindObjectOfType<DatabaseManager>();
@@ -408,6 +410,7 @@ public class CityManager : MonoBehaviour
                     funds += buildingType.cost * 0.25f;
                     UpdateCityRatings(buildingType, x, y, true);
                     placedBuildings.Remove(position);
+                    Instantiate(smoke, new Vector3(x, 0, y), Quaternion.identity);
                 }
             }
             else
