@@ -16,12 +16,15 @@ MonoBehaviour:
   buildingName: Condos
   buildingPrefab: {fileID: 1053119084242062312, guid: 240b84daa60bbc64c8ac20899f570544,
     type: 3}
+  zonePrefab: {fileID: 0}
   happinessImpact: 12
   educationImpact: 100
   cost: 70
+  zoneType: 1
+  isZone: 0
   proximityBonusRange: 1
   proximityBonusImpact: 10
-  economicImpact: 300
+  economicImpact: 160
   environmentalImpact: -100
   safetyImpact: -10
   healthcareImpact: 10

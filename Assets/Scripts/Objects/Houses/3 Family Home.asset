@@ -16,9 +16,12 @@ MonoBehaviour:
   buildingName: 3 Family
   buildingPrefab: {fileID: 1053119084242062312, guid: 6a84e974d852c914a9ab33ef38b9bfbe,
     type: 3}
+  zonePrefab: {fileID: 0}
   happinessImpact: 12
   educationImpact: 50
   cost: 70
+  zoneType: 1
+  isZone: 0
   proximityBonusRange: 1
   proximityBonusImpact: 10
   economicImpact: 100
