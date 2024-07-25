@@ -6,16 +6,16 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     public GameObject fade;
-    public void LoadGame()
+    public void LoadGame(int scene)
     {
-        StartCoroutine(LoadScene());
+        StartCoroutine(LoadScene(scene));
     }
 
-    IEnumerator LoadScene()
+    IEnumerator LoadScene(int scene)
     {
         GameObject go = Instantiate(fade, Vector3.zero, Quaternion.identity);
         DontDestroyOnLoad(go);
         yield return new WaitForSeconds(1.0f);
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(scene);
     }
 }
