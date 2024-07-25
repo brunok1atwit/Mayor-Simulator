@@ -89,7 +89,9 @@ public class BuildingPlacer : MonoBehaviour
     public void SetSelectedBuilding(BuildingType buildingType)
     {
         selectedBuildingType = buildingType;
+        cityManager.DisplayFact(buildingType);
     }
+
 
     bool IsValidPlacement(BuildingType buildingType, int x, int y)
     {
