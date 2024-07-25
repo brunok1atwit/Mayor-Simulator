@@ -867,7 +867,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &97970253
 RectTransform:
   m_ObjectHideFlags: 0
@@ -881,11 +881,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1188836421}
-  m_Father: {fileID: 1885315906}
+  m_Father: {fileID: 1090927250}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 800, y: 168}
+  m_AnchoredPosition: {x: 0, y: -241}
   m_SizeDelta: {x: 160, y: 100.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &97970254
@@ -6909,7 +6909,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &765256295
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6923,11 +6923,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1193119134}
-  m_Father: {fileID: 1885315906}
+  m_Father: {fileID: 1090927250}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 800, y: 168}
+  m_AnchoredPosition: {x: 0, y: -122}
   m_SizeDelta: {x: 160, y: 100.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &765256296
@@ -7763,6 +7763,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7ad8e6f1da7f0d34ba418bd96c75b212, type: 2}
   - {fileID: 11400000, guid: fbea3baaa920c4442aba8b16cb21f6a1, type: 2}
   - {fileID: 11400000, guid: 8eea37bff18626845b1ffff82d8a645e, type: 2}
+  - {fileID: 11400000, guid: cbcb85ae39cacf54a88959d9100b567e, type: 2}
+  - {fileID: 11400000, guid: b3819ef1cf38633409af64ddcd5c7e52, type: 2}
   citySize: 10
   housingCap: 0
   funds: 10000
@@ -9563,6 +9565,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2058103597}
+  - {fileID: 765256295}
+  - {fileID: 97970253}
   m_Father: {fileID: 1885315906}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -10965,7 +10969,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Street
+  m_text: Nuclear Plant
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -11099,7 +11103,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Street
+  m_text: Power Plant
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -17765,8 +17769,6 @@ RectTransform:
   - {fileID: 865199110}
   - {fileID: 43346193}
   - {fileID: 1090927250}
-  - {fileID: 765256295}
-  - {fileID: 97970253}
   - {fileID: 1483712539}
   - {fileID: 1767908509}
   m_Father: {fileID: 504463689}
