@@ -20,7 +20,7 @@ MonoBehaviour:
   happinessImpact: 0
   educationImpact: 0
   cost: 0
-  zoneType: 2
+  zoneType: 3
   isZone: 1
   proximityBonusRange: 0
   proximityBonusImpact: 0

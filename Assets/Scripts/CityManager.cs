@@ -306,7 +306,6 @@ public class CityManager : MonoBehaviour
     void ApplyDiminishingReturns(int x, int y, BuildingType buildingType, bool isRemoving)
     {
         float diminishingFactor = isRemoving ? 1.0f / 0.7f : 0.7f;
-
         for (int i = -1; i <= 1; i++)
         {
             for (int j = -1; j <= 1; j++)
@@ -316,6 +315,7 @@ public class CityManager : MonoBehaviour
 
                 if (newX >= 0 && newX < citySize && newY >= 0 && newY < citySize && cityGrid[newX, newY] != null)
                 {
+                    
                     BuildingType nearbyBuildingType = GetBuildingTypeFromPrefab(cityGrid[newX, newY]);
                     if (nearbyBuildingType != null && nearbyBuildingType.category == buildingType.category)
                     {
@@ -428,6 +428,11 @@ public class CityManager : MonoBehaviour
     {
         foreach (BuildingType bt in buildingTypes)
         {
+            print(bt.name);
+            if(bt.isZone)
+            {
+                continue;
+            }
             string Name = bt.buildingPrefab.name + "(Clone)";
             if (Name == building.name)
             {
