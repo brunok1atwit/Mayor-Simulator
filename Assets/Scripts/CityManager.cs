@@ -592,14 +592,9 @@ public class CityManager : MonoBehaviour
 
         // Fact 4: For any building type
         facts.Add("To achieve a balanced urban space, planning must consider economic, social, and environmental factors. \r\n\r\nImpact on Economic Scores: Integrated urbanization projects that consider economic, social, and environmental factors can enhance economic growth and improve economic scores.\r\n\r\nImpact on Safety: Sustainable urbanization includes investing in safety infrastructure, which can improve safety ratings.<sup>4</sup>");
+        
 
-        // Fact 5: For recreation and housing buildings
-        if (buildingType.category == BuildingCategory.Recreation || buildingType.category == BuildingCategory.Residential)
-        {
-            facts.Add("Balanced urban growth enhances the quality of life; this includes investments in recreational facilities and housing. \r\n\r\nImpact on Recreation: Investments in recreational facilities improve the quality of life and contribute to higher happiness scores.\r\n\r\nImpact on Housing: Providing affordable and adequate housing is essential for urban development and contributes to overall happiness and well-being.<sup>5</sup>");
-        }
-
-        // Fact 6: For recreation buildings
+        // Fact 5: For recreation buildings
         if (buildingType.category == BuildingCategory.Recreation)
         {
             facts.Add("Well-designed tax policies can stimulate economic growth and fund essential public services. Impact on Economic Scores: Effective taxation policies can boost economic scores by providing the necessary funds for economic development projects and public services.\r\n\r\nImpact on Public Services: Taxes are crucial for funding public services, including healthcare, education, safety, and infrastructure, all of which contribute to overall city ratings.<sup>6</sub>");

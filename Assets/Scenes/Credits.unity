@@ -551,50 +551,18 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Credits\n\n\rLorem ipsum dolor sit amet, consectetur adipiscing elit.
-    Ut mi mi, egestas ut lacinia eget, scelerisque sed velit. Nunc eget massa a nunc
-    suscipit rutrum. Cras aliquet condimentum semper. Sed laoreet, dui eget molestie
-    malesuada, lacus neque egestas metus, at molestie nibh massa sit amet arcu. Vestibulum
-    non volutpat enim. Pellentesque quis congue neque. Sed pulvinar neque ac nulla
-    placerat porta.\r\n\r\nOrci varius natoque penatibus et magnis dis parturient
-    montes, nascetur ridiculus mus. Fusce elementum suscipit ornare. Nullam aliquet
-    placerat pretium. Mauris non diam ut erat lobortis rhoncus. Vestibulum rutrum
-    dui dolor, nec convallis nisl eleifend sit amet. Orci varius natoque penatibus
-    et magnis dis parturient montes, nascetur ridiculus mus. Nulla ac consequat urna.
-    Pellentesque ipsum urna, porttitor sed nulla non, venenatis mattis enim. Ut sodales
-    congue tincidunt. Suspendisse potenti. Nullam mollis augue id risus dapibus,
-    id vehicula libero dapibus. Etiam ac elit sit amet sapien condimentum dictum.
-    Maecenas ultrices bibendum ex, eget faucibus est vulputate sed. Mauris in ligula
-    ante. Pellentesque tempor justo ut rhoncus dictum. Cras sed nulla ut diam accumsan
-    consectetur.\r\n\r\nCras quis arcu vestibulum metus sollicitudin egestas et ac
-    elit. Praesent blandit dolor eget quam mollis porta eleifend a ante. Vivamus
-    sit amet dui a lorem semper vestibulum tempus nec quam. Vivamus quis augue sit
-    amet nibh varius venenatis. Nulla porta, ex quis blandit tincidunt, orci lacus
-    sodales orci, facilisis tempus enim arcu id magna. Phasellus eget massa sed massa
-    efficitur viverra. Morbi ultricies fringilla turpis, rhoncus tempor enim fringilla
-    in. Curabitur lobortis tempor libero, eget rutrum eros condimentum ut. Quisque
-    tortor nisl, accumsan id lorem eget, aliquam pulvinar sem.\r\n\r\nQuisque erat
-    nibh, auctor nec lorem non, aliquam porttitor purus. Aliquam ornare ex ut consequat
-    dignissim. Aliquam condimentum mattis tincidunt. Integer placerat justo finibus,
-    vestibulum mi sed, auctor ligula. Phasellus faucibus arcu dui, ut venenatis nisl
-    auctor consequat. Nunc mattis dui at ipsum sollicitudin, a suscipit erat blandit.
-    Donec nec mauris rhoncus, rhoncus tellus vulputate, laoreet arcu. Vestibulum
-    laoreet ornare enim, a auctor tellus rutrum nec. Etiam a ullamcorper turpis.
-    Ut nec scelerisque lacus, non aliquam nunc. Aliquam iaculis efficitur turpis,
-    ac rhoncus augue rutrum tincidunt. Maecenas ut vulputate nunc. Vestibulum aliquam
-    erat at nunc pulvinar, quis varius purus bibendum.\r\n\r\nVivamus blandit tortor
-    vitae lorem consequat tempus. Morbi ut lectus sapien. Quisque finibus tortor
-    et enim mattis dictum et non nulla. Integer molestie purus quis massa hendrerit,
-    quis venenatis nunc maximus. Etiam tincidunt, sem tincidunt pharetra hendrerit,
-    massa orci hendrerit quam, non ultrices purus ante ac leo. Fusce faucibus justo
-    in metus aliquam molestie. Pellentesque laoreet magna neque, a aliquam sem bibendum
-    id. Maecenas efficitur, leo ut eleifend vehicula, leo turpis imperdiet ligula,
-    vitae vestibulum nisl purus eu lorem. Curabitur pretium massa at ligula fermentum,
-    sit amet ultricies eros volutpat. Integer tempor magna risus, in ornare orci
-    aliquam ut. Quisque sit amet dolor dolor. Donec ac sapien auctor, convallis leo
-    viverra, porta dui. Nulla commodo augue eget sapien auctor, lacinia tristique
-    libero cursus. Fusce in est pharetra neque dignissim malesuada eget vitae ex.
-    Sed fermentum mattis laoreet. Nam quis vehicula purus. "
+  m_text: "Credits\n\n\r#1: Veneri, Paolo, and Fabrice Barca. \"Urban Sprawl and
+    Growth Management \u2013 Drivers, Impacts and Responses in Selected European
+    and US Cities.\" Future Cities and Environment, vol. 2, 2016.\n\n#2: Hanif, Imran.
+    \"Impact of Urbanization, Economic Growth, and Population Size on Residential
+    Carbon Emissions in the SAARC Countries.\" Clean Technologies and Environmental
+    Policy, vol. 22, no. 2, 2020, pp. 423-435.\n\n#3: Dritsakis, Nikolaos, and Athanasios
+    Adamopoulos. \"A Literature Review on Population Growth and Economic Development.\"
+    Munich Personal RePEc Archive, MPRA Paper No. 86105067, 2018.\n\n#4: Hu, Qian,
+    et al. \"The Impact of New Urbanization Construction on Sustainable Economic
+    Growth.\" Environmental Science and Pollution Research, vol. 30, no. 23, 2023,
+    pp. 1-15.\n\n#5: Mustafa, Ghulam, et al. \"Impact of Taxation on Economic Growth
+    in Urban Areas.\" Sustainability, vol. 15, no. 9, 2023."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
