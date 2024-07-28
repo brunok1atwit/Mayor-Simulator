@@ -12,7 +12,9 @@ public class CityManager : MonoBehaviour
     public int currentCityId;
 
     public List<BuildingType> buildingTypes;
+    public List<ZoneType> zoneTypes;
     public GameObject[,] cityGrid;
+    public GameObject[,] zonePlacedGrid;
     public ZoneType[,] zoneGrid;
     public int citySize = 10;
     public float[,] happinessGrid;
@@ -62,6 +64,7 @@ public class CityManager : MonoBehaviour
     public TextMeshProUGUI TextFact;
 
     private Dictionary<Vector2Int, BuildingType> placedBuildings = new Dictionary<Vector2Int, BuildingType>();
+    private Dictionary<Vector2Int, BuildingType> placedZones = new Dictionary<Vector2Int, BuildingType>();
 
     public GameObject smoke;
 
@@ -79,7 +82,6 @@ public class CityManager : MonoBehaviour
     {
         fundsText.text = "Funds: $" + funds.ToString();
         populationText.text = "Population: " + population.ToString();
-        /*
         happinessText.text = "Happiness: ";
         economText.text = "Economic: ";
         enviroText.text = "Environmental: ";
@@ -88,7 +90,6 @@ public class CityManager : MonoBehaviour
         recreText.text = "Recreation: ";
         houseText.text = "Housing: ";
         eduText.text = "Education: ";
-        */
         houseSlider.value = CalculateTotalScore(housingGrid) * 2.0f;
         econSlider.value = CalculateTotalScore(economicGrid) * 2.0f;
         healthSlider.value = CalculateTotalScore(healthcareGrid) * 2.0f;
@@ -102,6 +103,7 @@ public class CityManager : MonoBehaviour
     private void InitializeCityGrids()
     {
         cityGrid = new GameObject[citySize, citySize];
+        zonePlacedGrid = new GameObject[citySize, citySize];
         zoneGrid = new ZoneType[citySize, citySize];
         happinessGrid = new float[citySize, citySize];
         economicGrid = new float[citySize, citySize];
@@ -123,6 +125,12 @@ public class CityManager : MonoBehaviour
                 {
                     Destroy(cityGrid[x, y]);
                     cityGrid[x, y] = null;
+                }
+                if (zonePlacedGrid[x,y] != null)
+                {
+                    Destroy(zonePlacedGrid[x, y]);
+                    zonePlacedGrid[x, y] = null;
+                    zoneGrid[x, y] = ZoneType.None;
                 }
             }
         }
@@ -152,12 +160,20 @@ public class CityManager : MonoBehaviour
 
                 if (buildingType != null)
                 {
-                    PlaceBuildingFromLoad(buildingType, building.X, building.Y);
+                    if(buildingType.isZone)
+                    {
+                        PlaceZoneFromLoad(buildingType, building.X, building.Y);
+                    }
+                    else
+                    {
+                        PlaceBuildingFromLoad(buildingType, building.X, building.Y);
+                    }
+                    
                 }
             }
         }
 
-        UpdateUI();
+        //UpdateUI();
     }
 
     public void SaveCity(int cityId)
@@ -188,13 +204,27 @@ public class CityManager : MonoBehaviour
             };
             _databaseManager.SaveBuilding(building);
         }
+        foreach (var kvp in placedZones)
+        {
+            Vector2Int position = kvp.Key;
+            BuildingType buildingType = kvp.Value;
+
+            Building building = new Building
+            {
+                CityId = city.Id,
+                Type = buildingType.buildingName,
+                X = position.x,
+                Y = position.y
+            };
+            _databaseManager.SaveBuilding(building);
+        }
     }
 
     private BuildingType GetBuildingType(string buildingName)
     {
         foreach (var buildingType in buildingTypes)
         {
-            print(buildingType.name);
+            //print(buildingType.name);
             if (buildingType.buildingName == buildingName)
             {
                 return buildingType;
@@ -257,6 +287,25 @@ public class CityManager : MonoBehaviour
         }
     }
 
+    public void PlaceZone(BuildingType zoneType, int x, int y)
+    {
+        if (x >= 0 && x < citySize && y >= 0 && y < citySize)
+        {
+            SetZone(x, y, zoneType.zoneType);
+            GameObject zone = Instantiate(zoneType.zonePrefab, new Vector3(x, 0, y), Quaternion.identity);
+            zone.name = zoneType.buildingName + " Zone";
+            Vector2Int position = new Vector2Int(x, y);
+            //placedBuildings[position] = buildingType;
+            placedZones[position] = zoneType;
+            zoneGrid[x, y] = zoneType.zoneType;
+            zonePlacedGrid[x, y] = zone;
+        }
+        else
+        {
+            Debug.LogWarning("Position out of bounds");
+        }
+    }
+
     public void PlaceBuildingFromLoad(BuildingType buildingType, int x, int y)
     {
         if (x >= 0 && x < citySize && y >= 0 && y < citySize)
@@ -273,6 +322,25 @@ public class CityManager : MonoBehaviour
                 placedBuildings[position] = buildingType;
                 UpdateCityRatings(buildingType, x, y, false);
             }
+        }
+        else
+        {
+            Debug.LogWarning("Position out of bounds");
+        }
+    }
+
+    public void PlaceZoneFromLoad(BuildingType zoneType, int x, int y)
+    {
+        if (x >= 0 && x < citySize && y >= 0 && y < citySize)
+        {
+            SetZone(x, y, zoneType.zoneType);
+            GameObject zone = Instantiate(zoneType.zonePrefab, new Vector3(x, 0, y), Quaternion.identity);
+            zone.name = zoneType.buildingName + " Zone";
+            Vector2Int position = new Vector2Int(x, y);
+            //placedBuildings[position] = buildingType;
+            placedZones[position] = zoneType;
+            zoneGrid[x, y] = zoneType.zoneType;
+            zonePlacedGrid[x, y] = zone;
         }
         else
         {
@@ -417,6 +485,18 @@ public class CityManager : MonoBehaviour
                     Instantiate(smoke, new Vector3(x, 0, y), Quaternion.identity);
                 }
             }
+            else if (zonePlacedGrid[x, y] != null)
+            {
+                GameObject building = zonePlacedGrid[x, y];
+                Vector2Int position = new Vector2Int(x, y);
+                if (placedZones.TryGetValue(position, out BuildingType buildingType))
+                {
+                    Destroy(building);
+                    zonePlacedGrid[x, y] = null;
+                    zoneGrid[x, y] = ZoneType.None;
+                    placedZones.Remove(position);
+                }
+            }
             else
             {
                 Debug.LogWarning("No building at this position to remove");
@@ -432,7 +512,7 @@ public class CityManager : MonoBehaviour
     {
         foreach (BuildingType bt in buildingTypes)
         {
-            print(bt.name);
+            //print(bt.name);
             if(bt.isZone)
             {
                 continue;
@@ -445,7 +525,6 @@ public class CityManager : MonoBehaviour
         }
         return null;
     }
-
     IEnumerator CheckPopulation()
     {
         while (true)

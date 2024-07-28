@@ -31,7 +31,7 @@ public class BuildingPlacer : MonoBehaviour
                 if (selectedBuildingType.zonePrefab != null && selectedBuildingType.isZone)
                 {
                     if (cityManager.zoneGrid[x, y] == ZoneType.None)
-                        PlaceZone(selectedBuildingType, x, y);
+                        cityManager.PlaceZone(selectedBuildingType, x, y);
                     else
                         Debug.Log("Zone already here!");
 
@@ -68,21 +68,6 @@ public class BuildingPlacer : MonoBehaviour
                     Debug.Log("Can't place on street");
                 }
             }
-        }
-    }
-
-    void PlaceZone(BuildingType zoneType, int x, int y)
-    {
-        if (x >= 0 && x < cityManager.citySize && y >= 0 && y < cityManager.citySize)
-        {
-            cityManager.SetZone(x, y, zoneType.zoneType);
-            GameObject zone = Instantiate(zoneType.zonePrefab, new Vector3(x, 0, y), Quaternion.identity);
-            zone.name = zoneType.buildingName + " Zone";
-            cityManager.zoneGrid[x, y] = zoneType.zoneType;
-        }
-        else
-        {
-            Debug.LogWarning("Position out of bounds");
         }
     }
 
