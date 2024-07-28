@@ -18,15 +18,15 @@ MonoBehaviour:
     type: 3}
   zonePrefab: {fileID: 0}
   happinessImpact: 0
-  educationImpact: 50
-  cost: 30
+  educationImpact: 100
+  cost: 800
   zoneType: 3
   isZone: 0
   proximityBonusRange: 0
   proximityBonusImpact: 0
-  economicImpact: 100
-  environmentalImpact: -1000
-  safetyImpact: 100
-  healthcareImpact: 200
-  recreationImpact: 500
-  housingImpact: 100
+  economicImpact: 1200
+  environmentalImpact: -1200
+  safetyImpact: -100
+  healthcareImpact: 0
+  recreationImpact: 100
+  housingImpact: 0

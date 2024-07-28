@@ -564,7 +564,7 @@ public class CityManager : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(20f);
-            funds += population * taxRate * 100.0f;
+            funds += population * taxRate * Mathf.Floor(CalculateTotalScore(economicGrid) * economicWeight*25);
         }
     }
 

@@ -19,7 +19,7 @@ MonoBehaviour:
   zonePrefab: {fileID: 0}
   happinessImpact: 0
   educationImpact: 50
-  cost: 0
+  cost: 540
   zoneType: 2
   isZone: 0
   proximityBonusRange: 0
