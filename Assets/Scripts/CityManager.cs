@@ -49,6 +49,8 @@ public class CityManager : MonoBehaviour
     public Slider eduSlider;
     public Slider environmentSlider;
 
+    public Slider happySlider;
+
     private readonly float economicWeight = 0.25f;
     private readonly float safetyWeight = 0.20f;
     private readonly float housingWeight = 0.20f;
@@ -77,6 +79,7 @@ public class CityManager : MonoBehaviour
     {
         fundsText.text = "Funds: $" + funds.ToString();
         populationText.text = "Population: " + population.ToString();
+        /*
         happinessText.text = "Happiness: ";
         economText.text = "Economic: ";
         enviroText.text = "Environmental: ";
@@ -85,14 +88,15 @@ public class CityManager : MonoBehaviour
         recreText.text = "Recreation: ";
         houseText.text = "Housing: ";
         eduText.text = "Education: ";
-
-        houseSlider.value = CalculateTotalScore(housingGrid);
-        econSlider.value = CalculateTotalScore(economicGrid);
-        healthSlider.value = CalculateTotalScore(healthcareGrid);
-        recSlider.value = CalculateTotalScore(recreationGrid);
-        safetySlider.value = CalculateTotalScore(safetyGrid);
-        eduSlider.value = CalculateTotalScore(educationGrid);
-        environmentSlider.value = CalculateTotalScore(environmentalGrid);
+        */
+        houseSlider.value = CalculateTotalScore(housingGrid) * 2.0f;
+        econSlider.value = CalculateTotalScore(economicGrid) * 2.0f;
+        healthSlider.value = CalculateTotalScore(healthcareGrid) * 2.0f;
+        recSlider.value = CalculateTotalScore(recreationGrid) * 2.0f;
+        safetySlider.value = CalculateTotalScore(safetyGrid) * 2.0f;
+        eduSlider.value = CalculateTotalScore(educationGrid) * 2.0f;
+        environmentSlider.value = CalculateTotalScore(environmentalGrid) * 2.0f;
+        happySlider.value = CalculateTotalHappiness() * 3.0f;
     }
 
     private void InitializeCityGrids()
