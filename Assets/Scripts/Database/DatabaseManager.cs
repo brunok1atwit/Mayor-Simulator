@@ -1,8 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting.Dependencies.Sqlite;
-
+using SQLite4Unity3d;
 public class DatabaseManager : MonoBehaviour
 {
     private SQLiteConnection _connection;

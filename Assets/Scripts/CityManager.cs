@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static DatabaseManager;
 
@@ -27,7 +28,7 @@ public class CityManager : MonoBehaviour
     public float[,] housingGrid;
 
     public int housingCap;
-    public float funds = 10000.00f;
+    public float funds = 25000.00f;
     public TextMeshProUGUI fundsText;
     public int population = 15;
     public TextMeshProUGUI populationText;
@@ -68,6 +69,8 @@ public class CityManager : MonoBehaviour
 
     public GameObject smoke;
 
+    public GameObject fade;
+
     void Start()
     {
         _databaseManager = FindObjectOfType<DatabaseManager>();
@@ -80,7 +83,11 @@ public class CityManager : MonoBehaviour
 
     private void Update()
     {
-        fundsText.text = "Funds: $" + funds.ToString();
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            StartCoroutine(LoadScene(0));
+        }
+        fundsText.text = "Funds: $" + funds.ToString("F2");
         populationText.text = "Population: " + population.ToString();
         happinessText.text = "Happiness: ";
         economText.text = "Economic: ";
@@ -243,7 +250,11 @@ public class CityManager : MonoBehaviour
 
     public void PlaceBuilding(BuildingType buildingType, int x, int y)
     {
-        if (x >= 0 && x < citySize && y >= 0 && y < citySize)
+        if(funds < buildingType.cost)
+        {
+            Debug.LogWarning("Not enough funds.");
+        }
+        else if (x >= 0 && x < citySize && y >= 0 && y < citySize)
         {
             if (zoneGrid[x, y] != buildingType.zoneType && !(zoneGrid[x, y] == ZoneType.MixedUse && buildingType.zoneType != ZoneType.Industrial))
             {
@@ -619,5 +630,13 @@ public class CityManager : MonoBehaviour
         healtText.text = "Healthcare: " + CalculateTotalScore(healthcareGrid).ToString("f1");
         recreText.text = "Recreation: " + CalculateTotalScore(recreationGrid).ToString("f1");
         houseText.text = "Housing: " + CalculateTotalScore(housingGrid).ToString("f1");
+    }
+
+    IEnumerator LoadScene(int scene)
+    {
+        GameObject go = Instantiate(fade, Vector3.zero, Quaternion.identity);
+        DontDestroyOnLoad(go);
+        yield return new WaitForSeconds(1.0f);
+        SceneManager.LoadScene(scene);
     }
 }

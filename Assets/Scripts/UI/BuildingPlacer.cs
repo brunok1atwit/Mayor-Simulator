@@ -101,4 +101,6 @@ public class BuildingPlacer : MonoBehaviour
         defaultCamera.gameObject.SetActive(true);
         mainCamera = defaultCamera;
     }
+
+
 }
